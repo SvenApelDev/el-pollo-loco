@@ -8,4 +8,9 @@ for (let x = -720; x <= 1440; x += 720) {
     
 }
 
-const level1 = new Level([], [new Cloud(200)], backgrounds);
+let clouds = [];
+for (let x = -300; x <= 1440; x += 500) {
+    clouds.push(new Cloud(x));
+}
+
+const level1 = new Level([], clouds, backgrounds);
