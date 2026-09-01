@@ -1,3 +1,4 @@
+
 class World {
 	canvas;
 	ctx;
@@ -43,3 +44,5 @@ class World {
 		});
 	}
 }
+
+
