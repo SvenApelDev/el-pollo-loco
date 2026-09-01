@@ -4,7 +4,7 @@ class World {
 	ctx;
 	keyboard;
 	level = level1;
-    camera_x = ;
+    camera_x = 0;
 
 	/**
 	 * Initializes the canvas, input controllers, and starts the render loop.
