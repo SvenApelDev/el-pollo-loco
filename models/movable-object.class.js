@@ -1,4 +1,11 @@
 
 class MovableObject extends DrawableObject {
-    // Bewegungslogik (Gravitation, moveLeft, ...) folgt beim ersten beweglichen Objekt
+    speed = 0.15;
+
+/**
+ * Moves the object to the left based on its current speed.
+ */  
+    moveLeft() {
+        this.x -= this.speed;
+    }
 }
