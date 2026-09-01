@@ -28,7 +28,7 @@ class DrawableObject {
 	}
 
 	/**
-	 * Draw this object's image onto the canvas.
+	 * Draws this object's image onto the canvas.
 	 * @param {CanvasRenderingContext2D} ctx - the 2d rendering context
 	 */
 	draw(ctx) {
