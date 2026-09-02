@@ -14,4 +14,9 @@ for (let x = -300; x <= 3600; x += 500) {
 	clouds.push(new Cloud(x));
 }
 
-const level1 = new Level([], clouds, backgrounds);
+const enemies = [];
+for (let i = 0; i < 8; i++) {
+    enemies.push(new Chicken());
+}
+
+const level1 = new Level(enemies, clouds, backgrounds);
