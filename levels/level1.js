@@ -17,6 +17,7 @@ for (let x = -300; x <= 3600; x += 500) {
 const enemies = [];
 for (let i = 0; i < 8; i++) {
     enemies.push(new ChickenNormal());
+    enemies.push(new ChickenSmall());
 }
 
 const level1 = new Level(enemies, clouds, backgrounds);

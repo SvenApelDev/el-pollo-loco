@@ -4,7 +4,7 @@ class ChickenNormal extends MovableObject {
     y = 360;
 
     /**
-     * Create a normal chicken at a random position and starts its behaviour.
+     * Creates a normal chicken at a random position and starts its behaviour.
      */
     constructor() {
         super();
