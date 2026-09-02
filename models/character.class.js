@@ -5,6 +5,7 @@ class Character extends MovableObject {
 	x = 100;
 	speed = 5;
 	otherDirection = false;
+	lastMovement = 0;
 	world;
 
 	/**
@@ -19,7 +20,8 @@ class Character extends MovableObject {
 		this.loadImages(ImageHub.PEPE.hurt);
 		this.loadImages(ImageHub.PEPE.dead);
 		this.loadImages(ImageHub.PEPE.longIdle);
-        this.applyGravity();
+		this.lastMovement = Date.now();
+		this.applyGravity();
 		this.animate();
 	}
 
@@ -35,6 +37,13 @@ class Character extends MovableObject {
 	 * Reads keyboard input and moves the character accordingly.
 	 */
 	checkMovement() {
+		if (
+			this.world.keyboard.RIGHT ||
+			this.world.keyboard.LEFT ||
+			this.world.keyboard.SPACE
+		) {
+			this.lastMovement = Date.now();
+		}
 		if (this.world.keyboard.RIGHT) {
 			this.moveRight();
 			this.otherDirection = false;
@@ -43,22 +52,32 @@ class Character extends MovableObject {
 			this.moveLeft();
 			this.otherDirection = true;
 		}
-        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-            this.jump();
-        }
+		if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+			this.jump();
+		}
 	}
 
 	/**
 	 * Plays the animation that matches the character's current state.
 	 */
 	checkAnimation() {
-        if (this.isAboveGround()) {
-            this.playAnimation(ImageHub.PEPE.jump);
-        } else if (this.isMoving()) {
+		if (this.isAboveGround()) {
+			this.playAnimation(ImageHub.PEPE.jump);
+		} else if (this.isMoving()) {
 			this.playAnimation(ImageHub.PEPE.walk);
+		} else if (this.isSleeping()) {
+			this.playAnimation(ImageHub.PEPE.longIdle);
 		} else {
 			this.playAnimation(ImageHub.PEPE.idle);
 		}
+	}
+
+	/**
+	 * Return true if idle for more than 15 sec.
+	 * @returns {boolean}
+	 */
+	isSleeping() {
+		return Date.now() - this.lastMovement > 15000;
 	}
 
 	/**
