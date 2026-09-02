@@ -19,6 +19,7 @@ class Character extends MovableObject {
 		this.loadImages(ImageHub.PEPE.hurt);
 		this.loadImages(ImageHub.PEPE.dead);
 		this.loadImages(ImageHub.PEPE.longIdle);
+        this.applyGravity();
 		this.animate();
 	}
 
@@ -42,13 +43,18 @@ class Character extends MovableObject {
 			this.moveLeft();
 			this.otherDirection = true;
 		}
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+        }
 	}
 
 	/**
 	 * Plays the animation that matches the character's current state.
 	 */
 	checkAnimation() {
-		if (this.isMoving()) {
+        if (this.isAboveGround()) {
+            this.playAnimation(ImageHub.PEPE.jump);
+        } else if (this.isMoving()) {
 			this.playAnimation(ImageHub.PEPE.walk);
 		} else {
 			this.playAnimation(ImageHub.PEPE.idle);
