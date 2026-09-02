@@ -26,10 +26,7 @@ class Character extends MovableObject {
 	 */
 	animate() {
 		IntervalHub.startInterval(() => this.checkMovement(), 1000 / 60);
-		IntervalHub.startInterval(
-			() => this.playAnimation(ImageHub.PEPE.idle),
-			1000 / 6,
-		);
+		IntervalHub.startInterval(() => this.checkAnimation(), 1000 / 6);
 	}
 
 	/**
@@ -42,5 +39,24 @@ class Character extends MovableObject {
 		if (this.world.keyboard.LEFT) {
 			this.moveLeft();
 		}
+	}
+
+	/**
+	 * Plays the animation that matches the character's current state.
+	 */
+	checkAnimation() {
+		if (this.isMoving()) {
+			this.playAnimation(ImageHub.PEPE.walk);
+		} else {
+			this.playAnimation(ImageHub.PEPE.idle);
+		}
+	}
+
+	/**
+	 * Return true if a movement key is pressed.
+	 * @returns {boolean}
+	 */
+	isMoving() {
+		return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
 	}
 }
