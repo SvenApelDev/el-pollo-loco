@@ -52,10 +52,36 @@ class World {
 	}
 
 	/**
-	 * Draws a single object onto the canvas.
+	 * Draws a single object, mirrored if it faces the other direction.
 	 * @param {DrawableObject} object - the object to draw
 	 */
 	addToMap(object) {
+		if (object.otherDirection) {
+			this.flipImage(object);
+		}
 		object.draw(this.ctx);
+		if (object.otherDirection) {
+			this.flipImageBack(object);
+		}
+	}
+
+	/**
+	 * Flip the canvas horizontally for mirrored drawing.
+	 * @param {DrawableObject} object
+	 */
+	flipImage(object) {
+		this.ctx.save();
+		this.ctx.translate(object.width, 0);
+		this.ctx.scale(-1, 1);
+		object.x = object.x * -1;
+	}
+
+	/**
+	 * Restores the canvas after mirrored drawing.
+	 * @param {DrawableObject} object
+	 */
+	flipImageBack(object) {
+		object.x = object.x * -1;
+		this.ctx.restore();
 	}
 }

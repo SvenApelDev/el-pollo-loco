@@ -3,7 +3,8 @@ class Character extends MovableObject {
 	width = 150;
 	y = 150;
 	x = 100;
-	speed = 10;
+	speed = 5;
+	otherDirection = false;
 	world;
 
 	/**
@@ -35,9 +36,11 @@ class Character extends MovableObject {
 	checkMovement() {
 		if (this.world.keyboard.RIGHT) {
 			this.moveRight();
+			this.otherDirection = false;
 		}
 		if (this.world.keyboard.LEFT) {
 			this.moveLeft();
+			this.otherDirection = true;
 		}
 	}
 
