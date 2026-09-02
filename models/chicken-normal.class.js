@@ -1,10 +1,10 @@
-class Chicken extends MovableObject {
+class ChickenNormal extends MovableObject {
     height = 60;
     width = 60;
     y = 360;
 
     /**
-     * Create a chicken at a random position and starts its behaviour.
+     * Create a normal chicken at a random position and starts its behaviour.
      */
     constructor() {
         super();
@@ -17,7 +17,7 @@ class Chicken extends MovableObject {
     }
 
     /**
-     * Starts the chicken's movement and animation loops.
+     * Starts the normal chicken's movement and animation loops.
      */
     animate() {
         IntervalHub.startInterval(() => this.moveLeft(), 1000 / 60);
