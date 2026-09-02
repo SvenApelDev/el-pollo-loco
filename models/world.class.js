@@ -23,7 +23,7 @@ class World {
 	 * Links game objects to the current world instance:
 	 */
 	setWorld() {
-		// character.world = this
+		this.character.world = this;
 	}
 
 	/**

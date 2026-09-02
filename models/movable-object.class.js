@@ -1,12 +1,18 @@
-
 class MovableObject extends DrawableObject {
 	speed = 0.15;
-    currentImage = 0;
+	currentImage = 0;
 	/**
 	 * Moves the object to the left based on its current speed.
 	 */
 	moveLeft() {
 		this.x -= this.speed;
+	}
+
+	/**
+	 * Moves the object to the right based on its current speed.
+	 */
+	moveRight() {
+		this.x += this.speed;
 	}
 
 	/**
