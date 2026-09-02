@@ -22,25 +22,25 @@ class Character extends MovableObject {
 	}
 
 	/**
-	 * Starts the character's idle animation loop.
+	 * Starts the character's movement and animation loops.
 	 */
 	animate() {
-        IntervalHub.startInterval(() => this.checkMovement(), 1000 / 60);
+		IntervalHub.startInterval(() => this.checkMovement(), 1000 / 60);
 		IntervalHub.startInterval(
 			() => this.playAnimation(ImageHub.PEPE.idle),
 			1000 / 6,
 		);
 	}
 
-    /**
-     * Reads keyboard input and moves the character accordingly.
-     */
-    checkMovement() {
-        if (this.world.keyboard.RIGHT) {
-            this.moveRight();
-        }
-        if (this.world.keyboard.LEFT) {
-            this.moveLeft();
-        }
-    }
+	/**
+	 * Reads keyboard input and moves the character accordingly.
+	 */
+	checkMovement() {
+		if (this.world.keyboard.RIGHT) {
+			this.moveRight();
+		}
+		if (this.world.keyboard.LEFT) {
+			this.moveLeft();
+		}
+	}
 }
