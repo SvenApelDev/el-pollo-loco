@@ -16,6 +16,7 @@ class World {
 		this.canvas = canvas;
 		this.keyboard = keyboard;
 		this.setWorld();
+        this.run();
 		this.draw();
 	}
 
@@ -32,12 +33,12 @@ class World {
 	draw() {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.camera_x = -this.character.x + 100;
+		this.camera_x = -this.character.x + 100;
 
 		this.ctx.translate(this.camera_x, 0);
 		this.addObjectsToMap(this.level.backgroundObjects);
 		this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.enemies);
+		this.addObjectsToMap(this.level.enemies);
 		this.addToMap(this.character);
 		this.ctx.translate(-this.camera_x, 0);
 
@@ -87,4 +88,22 @@ class World {
 		object.x = object.x * -1;
 		this.ctx.restore();
 	}
+
+	/**
+	 * Starts the collision check loop.
+	 */
+	run() {
+		IntervalHub.startInterval(() => this.checkCollision(), 1000 / 10);
+	}
+
+    /**
+     * Checks collisions between character and enemies.
+     */
+    checkCollision() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+                this.character.hit();
+            }
+        });
+    }
 }
