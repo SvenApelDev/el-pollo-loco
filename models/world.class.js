@@ -101,6 +101,7 @@ class World {
 	run() {
 		IntervalHub.startInterval(() => this.checkCollision(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkThrow(), 1000 / 60);
+        IntervalHub.startInterval(() => this.checkBottleHits(), 1000 / 60);
 	}
 
 	/**
@@ -135,4 +136,20 @@ class World {
             this.throwCooldown = false;
         }
 	}
+
+    /**
+     * Checks collisions between thrown bottles and enemies.
+     */
+    checkBottleHits() {
+        this.throwableObjects.forEach((bottle) => {
+            bottle.getRealFrame();
+            this.level.enemies.forEach((enemy) => {
+                enemy.getRealFrame();
+                if (bottle.isColliding(enemy) && !enemy.isDeadEnemy && !bottle.isSplashed) {
+                    enemy.die();
+                    bottle.splash();
+                }
+            });
+        });
+    }
 }
