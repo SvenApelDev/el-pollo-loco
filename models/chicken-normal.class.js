@@ -2,6 +2,7 @@ class ChickenNormal extends MovableObject {
     height = 60;
     width = 60;
     y = 360;
+    offset = {top: 5, left: 3, right: 3, bottom: 5};
 
     /**
      * Creates a normal chicken at a random position and starts its behaviour.

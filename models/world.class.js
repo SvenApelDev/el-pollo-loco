@@ -5,6 +5,7 @@ class World {
 	level = level1;
 	camera_x = 0;
 	character = new Character();
+	statusBar = new StatusBar();
 
 	/**
 	 * Initializes the canvas, input controllers, and starts the render loop.
@@ -16,7 +17,7 @@ class World {
 		this.canvas = canvas;
 		this.keyboard = keyboard;
 		this.setWorld();
-        this.run();
+		this.run();
 		this.draw();
 	}
 
@@ -40,8 +41,10 @@ class World {
 		this.addObjectsToMap(this.level.clouds);
 		this.addObjectsToMap(this.level.enemies);
 		this.addToMap(this.character);
+		this.character.drawFrame(this.ctx);
+        this.level.enemies.forEach((e) => e.drawFrame(this.ctx));
 		this.ctx.translate(-this.camera_x, 0);
-
+		this.addToMap(this.statusBar);
 		requestAnimationFrame(() => this.draw());
 	}
 
@@ -96,14 +99,17 @@ class World {
 		IntervalHub.startInterval(() => this.checkCollision(), 1000 / 10);
 	}
 
-    /**
-     * Checks collisions between character and enemies.
-     */
-    checkCollision() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
-                this.character.hit();
-            }
-        });
-    }
+	/**
+	 * Checks collisions between character and enemies.
+	 */
+	checkCollision() {
+        this.character.getRealFrame();
+		this.level.enemies.forEach((enemy) => {
+            enemy.getRealFrame();
+			if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+				this.character.hit();
+				this.statusBar.setPercentage(this.character.energy);
+			}
+		});
+	}
 }

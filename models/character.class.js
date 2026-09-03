@@ -6,6 +6,8 @@ class Character extends MovableObject {
 	speed = 5;
 	otherDirection = false;
 	lastMovement = 0;
+    offset = {top: 140, left: 34, right: 46, bottom: 16};
+    deadStarted = false;
 	world;
 
 	/**
@@ -61,7 +63,11 @@ class Character extends MovableObject {
 	 * Plays the animation that matches the character's current state.
 	 */
 	checkAnimation() {
-		if (this.isAboveGround()) {
+        if (this.isDead()) {
+            this.playDeadAnimation();
+        } else if (this.isHurt()) {
+            this.playAnimation(ImageHub.PEPE.hurt);
+        } else if (this.isAboveGround()) {
 			this.playAnimation(ImageHub.PEPE.jump);
 		} else if (this.isMoving()) {
 			this.playAnimation(ImageHub.PEPE.walk);

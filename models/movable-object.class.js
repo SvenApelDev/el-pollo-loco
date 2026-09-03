@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
 	speedY = 0;
 	currentImage = 0;
 	acceleration = 2.5;
+
 	/**
 	 * Moves the object to the left based on its current speed.
 	 */
@@ -21,7 +22,7 @@ class MovableObject extends DrawableObject {
 
 	/**
 	 * Cycles through an animation array by updating this.img each call.
-	 * @param {string[]} images - array of image paths to play
+	 * @param {string[]} images - array of image paths to play.
 	 */
 	playAnimation(images) {
 		let i = this.currentImage % images.length;
@@ -29,6 +30,29 @@ class MovableObject extends DrawableObject {
 		this.img = this.imageCache[path];
 		this.currentImage++;
 	}
+
+    /**
+     * Plays an animation once and stops on last frame.
+     * @param {string[]} images - The image paths to play.
+     */
+    playAnimationOnce(images) {
+        if (this.currentImage < images.length) {
+            this.img = this.imageCache[images[this.currentImage]];
+            this.currentImage++;
+        }
+    }
+
+    /**
+     * Plays the dead animation once, resetting the frame counter first.
+     */
+    playDeadAnimation() {
+        console.log('dead', this.currentImage, this.deadStarted);
+        if (!this.deadStarted) {
+            this.deadStarted = true;
+            this.currentImage = 0;
+        }
+        this.playAnimationOnce(ImageHub.PEPE.dead);
+    }
 
 	/**
 	 * Applies gravity by updating vertical position and speed over time.
@@ -61,19 +85,19 @@ class MovableObject extends DrawableObject {
 	}
 
 	/**
-	 * Checks if this object overlaps another movable object.
-	 * @param {MovableObject} mo - the other object
+	 * Checks if this object real frame overlaps another's.
+	 * @param {MovableObject} mo - the other object.
 	 * @returns {boolean}
 	 */
 	isColliding(mo) {
-		return this.x + this.width > mo.x && this.x < mo.x + mo.width && this.y + this.height > mo.y && this.y < mo.y + mo.height;
+		return (this.rX + this.rW > mo.rX && this.rX < mo.rX + mo.rW && this.rY + this.rH > mo.rY && this.rY < mo.rY + mo.rH);
 	}
 
 	/**
 	 * Reduces energy by 5 and records the time of the hit.
 	 */
 	hit() {
-		this.energy -= 5;
+		this.energy -= 10;
 		if (this.energy < 0) {
 			this.energy = 0;
 		} else {
@@ -88,4 +112,30 @@ class MovableObject extends DrawableObject {
 	isHurt() {
 		return Date.now() - this.lastHit < 1000;
 	}
+
+    /**
+     * Checks if the character has no energy left.
+     * @returns {boolean} True if energy is 0, otherwise false.
+     */
+    isDead() {
+        return this.energy == 0;
+    }
+
+    drawFrame(ctx) {
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'red';
+        ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width - this.offset.left - this.offset.right, this.height - this.offset.top - this.offset.bottom);
+        ctx.stroke();
+    }
+
+    /**
+     * Calculates the real collision frame from the offset.
+     */
+    getRealFrame() {
+        this.rX = this.x + this.offset.left;
+        this.rY = this.y + this.offset.top;
+        this.rW = this.width - this.offset.left - this.offset.right;
+        this.rH = this.height -this.offset.top - this.offset.bottom;
+    }
 }

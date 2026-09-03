@@ -2,6 +2,7 @@ class ChickenSmall extends MovableObject {
 	height = 50;
 	width = 50;
 	y = 370;
+    offset = {top: 5, left: 5, right: 5, bottom: 5};
 
 	/**
 	 * Creates a small chicken at a random position and starts its behaviour.
