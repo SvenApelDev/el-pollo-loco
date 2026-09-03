@@ -3,6 +3,7 @@ class ThrowableObject extends MovableObject {
 	width = 50;
 	offset = { top: 10, left: 10, right: 10, bottom: 10 };
 	isSplashed = false;
+    canBeRemoved = false;
 
 	/**
 	 * Creates a throwable bottle at the given position and throws it.
@@ -53,6 +54,7 @@ class ThrowableObject extends MovableObject {
 			this.isSplashed = true;
 			this.currentImage = 0;
 			this.loadImages(ImageHub.BOTTLE.splash);
+            setTimeout(() => this.canBeRemoved = true, 300);
 		}
 		this.playAnimationOnce(ImageHub.BOTTLE.splash);
 	}

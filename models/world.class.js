@@ -102,6 +102,7 @@ class World {
 		IntervalHub.startInterval(() => this.checkCollision(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkThrow(), 1000 / 60);
         IntervalHub.startInterval(() => this.checkBottleHits(), 1000 / 60);
+        IntervalHub.startInterval(() => this.clearBottles(), 1000 / 10);
 	}
 
 	/**
@@ -151,5 +152,12 @@ class World {
                 }
             });
         });
+    }
+
+    /**
+     * Remove bottles whose splash animation has finished.
+     */
+    clearBottles() {
+        this.throwableObjects = this.throwableObjects.filter((bottle) => !bottle.canBeRemoved);
     }
 }
