@@ -42,7 +42,7 @@ class World {
 		this.addObjectsToMap(this.level.enemies);
 		this.addToMap(this.character);
 		this.character.drawFrame(this.ctx);
-        this.level.enemies.forEach((e) => e.drawFrame(this.ctx));
+		this.level.enemies.forEach((e) => e.drawFrame(this.ctx));
 		this.ctx.translate(-this.camera_x, 0);
 		this.addToMap(this.statusBar);
 		requestAnimationFrame(() => this.draw());
@@ -96,19 +96,24 @@ class World {
 	 * Starts the collision check loop.
 	 */
 	run() {
-		IntervalHub.startInterval(() => this.checkCollision(), 1000 / 10);
+		IntervalHub.startInterval(() => this.checkCollision(), 1000 / 60);
 	}
 
 	/**
 	 * Checks collisions between character and enemies.
 	 */
-	checkCollision() {
-        this.character.getRealFrame();
+	checkCollision() {       
+		this.character.getRealFrame();
 		this.level.enemies.forEach((enemy) => {
-            enemy.getRealFrame();
-			if (this.character.isColliding(enemy) && !this.character.isHurt()) {
-				this.character.hit();
-				this.statusBar.setPercentage(this.character.energy);
+			enemy.getRealFrame();
+			if (this.character.isColliding(enemy) && !enemy.isDeadEnemy) {
+				if (this.character.isFalling()) {
+					enemy.die();
+					this.character.jump();
+				} else if (!this.character.isHurt()) {
+					this.character.hit();
+					this.statusBar.setPercentage(this.character.energy);
+				}
 			}
 		});
 	}
