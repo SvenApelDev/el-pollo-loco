@@ -6,6 +6,8 @@ class World {
 	camera_x = 0;
 	character = new Character();
 	statusBar = new StatusBar();
+    bottleAmount = 0;
+    bottleBar = new CountBar(ImageHub.BOTTLE.single, 20, 60);
 	throwableObjects = [];
     throwCooldown = false;
 
@@ -41,6 +43,7 @@ class World {
 		this.ctx.translate(this.camera_x, 0);
 		this.addObjectsToMap(this.level.backgroundObjects);
 		this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.bottles);
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.throwableObjects);
 		this.addToMap(this.character);
@@ -48,6 +51,8 @@ class World {
 		this.level.enemies.forEach((e) => e.drawFrame(this.ctx));
 		this.ctx.translate(-this.camera_x, 0);
 		this.addToMap(this.statusBar);
+        this.bottleBar.count = this.bottleAmount;
+        this.bottleBar.draw(this.ctx);
 		requestAnimationFrame(() => this.draw());
 	}
 
@@ -103,6 +108,7 @@ class World {
 		IntervalHub.startInterval(() => this.checkThrow(), 1000 / 60);
         IntervalHub.startInterval(() => this.checkBottleHits(), 1000 / 60);
         IntervalHub.startInterval(() => this.clearBottles(), 1000 / 10);
+        IntervalHub.startInterval(() => this.checkBottleCollect(), 1000 / 60);
 	}
 
 	/**
@@ -128,9 +134,10 @@ class World {
 	 * Throws one bottle per Key press of D.
 	 */
 	checkThrow() {
-		if (this.keyboard.D && !this.throwCooldown) {
+		if (this.keyboard.D && !this.throwCooldown && this.bottleAmount > 0) {
 			const bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
 			this.throwableObjects.push(bottle);
+            this.bottleAmount--;
             this.throwCooldown = true;
 		}
         if (!this.keyboard.D) {
@@ -159,5 +166,16 @@ class World {
      */
     clearBottles() {
         this.throwableObjects = this.throwableObjects.filter((bottle) => !bottle.canBeRemoved);
+    }
+
+    checkBottleCollect() {
+        this.character.getRealFrame();
+        this.level.bottles.forEach((bottle, index) => {
+            bottle.getRealFrame();
+            if (this.character.isColliding(bottle)) {
+                this.level.bottles.splice(index, 1);
+                this.bottleAmount++;
+            }
+        });
     }
 }

@@ -20,4 +20,9 @@ for (let i = 0; i < 8; i++) {
     enemies.push(new ChickenSmall());
 }
 
-const level1 = new Level(enemies, clouds, backgrounds);
+const bottles = [];
+for (let i = 0; i < 8; i++) {
+    bottles.push(new Bottle());
+}
+
+const level1 = new Level(enemies, clouds, backgrounds, bottles);
