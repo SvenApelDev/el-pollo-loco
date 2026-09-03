@@ -6,6 +6,8 @@ class World {
 	camera_x = 0;
 	character = new Character();
 	statusBar = new StatusBar();
+	throwableObjects = [];
+    throwCooldown = false;
 
 	/**
 	 * Initializes the canvas, input controllers, and starts the render loop.
@@ -40,6 +42,7 @@ class World {
 		this.addObjectsToMap(this.level.backgroundObjects);
 		this.addObjectsToMap(this.level.clouds);
 		this.addObjectsToMap(this.level.enemies);
+		this.addObjectsToMap(this.throwableObjects);
 		this.addToMap(this.character);
 		this.character.drawFrame(this.ctx);
 		this.level.enemies.forEach((e) => e.drawFrame(this.ctx));
@@ -97,12 +100,13 @@ class World {
 	 */
 	run() {
 		IntervalHub.startInterval(() => this.checkCollision(), 1000 / 60);
+		IntervalHub.startInterval(() => this.checkThrow(), 1000 / 60);
 	}
 
 	/**
 	 * Checks collisions between character and enemies.
 	 */
-	checkCollision() {       
+	checkCollision() {
 		this.character.getRealFrame();
 		this.level.enemies.forEach((enemy) => {
 			enemy.getRealFrame();
@@ -116,5 +120,19 @@ class World {
 				}
 			}
 		});
+	}
+
+	/**
+	 * Throws one bottle per Key press of D.
+	 */
+	checkThrow() {
+		if (this.keyboard.D && !this.throwCooldown) {
+			const bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
+			this.throwableObjects.push(bottle);
+            this.throwCooldown = true;
+		}
+        if (!this.keyboard.D) {
+            this.throwCooldown = false;
+        }
 	}
 }
