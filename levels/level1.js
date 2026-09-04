@@ -25,4 +25,9 @@ for (let i = 0; i < 8; i++) {
     bottles.push(new Bottle());
 }
 
-const level1 = new Level(enemies, clouds, backgrounds, bottles);
+const coins = [];
+for(let i = 0; i < 8; i++) {
+    coins.push(new Coin());
+}
+
+const level1 = new Level(enemies, clouds, backgrounds, bottles, coins);

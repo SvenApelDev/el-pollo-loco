@@ -7,7 +7,9 @@ class World {
 	character = new Character();
 	statusBar = new StatusBar();
     bottleAmount = 0;
-    bottleBar = new CountBar(ImageHub.BOTTLE.single, 20, 60);
+    bottleBar = new CountBar(ImageHub.BOTTLE.single, 20, 60, 50, 50, 90);
+    coinAmount = 0;
+    coinBar = new CountBar(ImageHub.COIN[1], 110, 50, 75, 75, 90) ;  
 	throwableObjects = [];
     throwCooldown = false;
 
@@ -44,6 +46,7 @@ class World {
 		this.addObjectsToMap(this.level.backgroundObjects);
 		this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.throwableObjects);
 		this.addToMap(this.character);
@@ -53,6 +56,8 @@ class World {
 		this.addToMap(this.statusBar);
         this.bottleBar.count = this.bottleAmount;
         this.bottleBar.draw(this.ctx);
+        this.coinBar.count = this.coinAmount;
+        this.coinBar.draw(this.ctx);
 		requestAnimationFrame(() => this.draw());
 	}
 
@@ -109,6 +114,7 @@ class World {
         IntervalHub.startInterval(() => this.checkBottleHits(), 1000 / 60);
         IntervalHub.startInterval(() => this.clearBottles(), 1000 / 10);
         IntervalHub.startInterval(() => this.checkBottleCollect(), 1000 / 60);
+        IntervalHub.startInterval(() => this.checkCoinCollect(), 1000 / 60);
 	}
 
 	/**
@@ -175,6 +181,17 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.level.bottles.splice(index, 1);
                 this.bottleAmount++;
+            }
+        });
+    }
+
+    checkCoinCollect() {
+        this.character.getRealFrame();
+        this.level.coins.forEach((coin, index) => {
+            coin.getRealFrame();
+            if (this.character.isColliding(coin)) {
+                this.level.coins.splice(index, 1);
+                this.coinAmount++;
             }
         });
     }

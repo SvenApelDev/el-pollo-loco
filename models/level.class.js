@@ -12,10 +12,11 @@ class Level {
      * @param {MovableObject[]} backgroundObjects - all background segments
      * @param {MovableObject[]} bottles - all collectable bottles
      */
-    constructor(enemies, clouds, backgroundObjects, bottles) {
+    constructor(enemies, clouds, backgroundObjects, bottles, coins) {
         this.enemies = enemies;
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
         this.bottles = bottles;
+        this.coins = coins;
     }
 }
