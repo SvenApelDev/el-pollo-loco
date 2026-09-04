@@ -1,16 +1,20 @@
 class StatusBar extends DrawableObject {
-	x = 20;
-	y = 0;
 	width = 200;
 	height = 60;
 	percentage = 100;
 
-	/**
-	 * Creates the health status bar and sets it to full.
-	 */
-	constructor() {
+/**
+ * Creates a status bar with the given images and position.
+ * @param {string[]} images - the six bar images from 0 to 100 
+ * @param {*} x - horizontal position
+ * @param {*} y - vertical position 
+ */
+	constructor(images, x, y) {
 		super();
-		this.loadImages(ImageHub.HEALTHBAR);
+        this.images = images;
+        this.x = x;
+        this.y = y;
+		this.loadImages(images);
 		this.setPercentage(100);
 	}
 
@@ -21,7 +25,7 @@ class StatusBar extends DrawableObject {
 	setPercentage(percentage) {
 		this.percentage = percentage;
 		const index = this.resolveImageIndex();
-		this.img = this.imageCache[ImageHub.HEALTHBAR[index]];
+		this.img = this.imageCache[this.images[index]];
 	}
 
     /**

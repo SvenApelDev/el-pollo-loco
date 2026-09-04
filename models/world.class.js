@@ -5,7 +5,8 @@ class World {
 	level = level1;
 	camera_x = 0;
 	character = new Character();
-	statusBar = new StatusBar();
+	statusBar = new StatusBar(ImageHub.HEALTHBAR, 20, 0);
+    endbossBar = new StatusBar(ImageHub.HEALTHBAR_ENDBOSS.orange, 480, 0);
 	bottleAmount = 0;
 	bottleBar = new CountBar(ImageHub.BOTTLE.single, 20, 60, 50, 50, 90);
 	coinAmount = 0;
@@ -56,6 +57,7 @@ class World {
 		this.bottleBar.draw(this.ctx);
 		this.coinBar.count = this.coinAmount;
 		this.coinBar.draw(this.ctx);
+        this.endbossBar.draw(this.ctx);
 		requestAnimationFrame(() => this.draw());
 	}
 
@@ -160,6 +162,7 @@ class World {
 				if (bottle.isColliding(enemy) && !enemy.isDeadEnemy && !bottle.isSplashed) {
 					if (enemy instanceof Endboss) {
 						enemy.hit();
+                        this.endbossBar.setPercentage(enemy.energy);
 					} else {
 						enemy.die();
 					}
