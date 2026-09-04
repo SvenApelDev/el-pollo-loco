@@ -18,6 +18,7 @@ const enemies = [];
 for (let i = 0; i < 8; i++) {
     enemies.push(new ChickenNormal());
     enemies.push(new ChickenSmall());
+    enemies.push(new Endboss());   
 }
 
 const bottles = [];

@@ -70,31 +70,65 @@ class ImageHub {
 	];
 
 	static BOTTLE = {
-        single: 'img/6_salsa_bottle/salsa_bottle.png',
-		rotation: [
-            "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png", 
-            "img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png", 
-            "img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png", 
-            "img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png"],
+		single: "img/6_salsa_bottle/salsa_bottle.png",
+		rotation: ["img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png", "img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png", "img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png", "img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png"],
 
-        splash: [
-            'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
-            'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
-            'img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png',
-            'img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png',
-            'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
-            'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
+		splash: [
+			"img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
+			"img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
+			"img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
+			"img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
+			"img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
+			"img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
+		],
 
-        ],
-
-        ground: [
-            'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
-            'img/6_salsa_bottle/2_salsa_bottle_on_ground.png',
-        ]
+		ground: ["img/6_salsa_bottle/1_salsa_bottle_on_ground.png", "img/6_salsa_bottle/2_salsa_bottle_on_ground.png"],
 	};
 
-    static COIN = [
-        'img/8_coin/coin_1.png',
-        'img/8_coin/coin_2.png',
-    ]
+	static COIN = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
+
+	static ENDBOSS = {
+		walk: ["img/4_enemie_boss_chicken/1_walk/G1.png", "img/4_enemie_boss_chicken/1_walk/G2.png", "img/4_enemie_boss_chicken/1_walk/G3.png", "img/4_enemie_boss_chicken/1_walk/G4.png"],
+		alert: [
+			"img/4_enemie_boss_chicken/2_alert/G5.png",
+			"img/4_enemie_boss_chicken/2_alert/G6.png",
+			"img/4_enemie_boss_chicken/2_alert/G7.png",
+			"img/4_enemie_boss_chicken/2_alert/G8.png",
+			"img/4_enemie_boss_chicken/2_alert/G9.png",
+			"img/4_enemie_boss_chicken/2_alert/G10.png",
+			"img/4_enemie_boss_chicken/2_alert/G11.png",
+			"img/4_enemie_boss_chicken/2_alert/G12.png",
+		],
+        attack: [
+            'img/4_enemie_boss_chicken/3_attack/G13.png',
+            'img/4_enemie_boss_chicken/3_attack/G14.png',
+            'img/4_enemie_boss_chicken/3_attack/G15.png',
+            'img/4_enemie_boss_chicken/3_attack/G16.png',
+            'img/4_enemie_boss_chicken/3_attack/G17.png',
+            'img/4_enemie_boss_chicken/3_attack/G18.png',
+            'img/4_enemie_boss_chicken/3_attack/G19.png',
+            'img/4_enemie_boss_chicken/3_attack/G20.png',
+        ],
+        hurt: [
+            'img/4_enemie_boss_chicken/4_hurt/G21.png',
+            'img/4_enemie_boss_chicken/4_hurt/G22.png',
+            'img/4_enemie_boss_chicken/4_hurt/G23.png',
+        ],
+        dead: [
+            'img/4_enemie_boss_chicken/5_dead/G24.png',
+            'img/4_enemie_boss_chicken/5_dead/G25.png',
+            'img/4_enemie_boss_chicken/5_dead/G26.png',
+        ],	
+	};
+
+    static HEALTHBAR_ENDBOSS = {
+        orange: [
+            'img/7_statusbars/2_statusbar_endboss/orange/orange0.png',
+            'img/7_statusbars/2_statusbar_endboss/orange/orange20.png',
+            'img/7_statusbars/2_statusbar_endboss/orange/orange40.png',
+            'img/7_statusbars/2_statusbar_endboss/orange/orange60.png',
+            'img/7_statusbars/2_statusbar_endboss/orange/orange80.png',
+            'img/7_statusbars/2_statusbar_endboss/orange/orange100.png',
+        ],
+    };
 }
