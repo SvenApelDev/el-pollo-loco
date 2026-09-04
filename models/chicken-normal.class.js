@@ -7,13 +7,13 @@ class ChickenNormal extends MovableObject {
 	/**
 	 * Creates a normal chicken at a random position and starts its behaviour.
 	 */
-	constructor() {
+	constructor(x) {
 		super();
 		this.loadImage(ImageHub.CHICKEN_NORMAL.walk[0]);
 		this.loadImages(ImageHub.CHICKEN_NORMAL.walk);
 		this.loadImages(ImageHub.CHICKEN_NORMAL.dead);
 		this.deadImages = ImageHub.CHICKEN_NORMAL.dead;
-		this.x = 500 + Math.random() * 3000;
+        this.x = x;
 		this.speed = 0.15 + Math.random() * 0.5;
 		this.animate();
 	}

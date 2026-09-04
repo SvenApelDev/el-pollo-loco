@@ -3,7 +3,8 @@ class Endboss extends MovableObject {
 	width = 250;
 	y = 60;
     energy = 100;
-	offset = { top: 60, left: 30, right: 30, bottom: 20 };
+	offset = { top: 70, left: 50, right: 60, bottom: 40 };
+    hadFirstContact = false;
 
     /**
      * Creates the endboss at the end of the level.
@@ -35,9 +36,13 @@ class Endboss extends MovableObject {
             this.playDeadEndboss();
         } else if (this.isHurt()) {
             this.playAnimation(ImageHub.ENDBOSS.hurt);
+        }else if (this.isAttacking) {
+            this.playAnimation(ImageHub.ENDBOSS.attack);
+        } else if (this.hadFirstContact) {
+            this.playAnimation(ImageHub.ENDBOSS.walk);
         } else {
             this.playAnimation(ImageHub.ENDBOSS.alert);
-        }
+        } 
     }
 
     playDeadEndboss() {

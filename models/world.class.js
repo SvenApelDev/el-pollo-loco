@@ -6,7 +6,8 @@ class World {
 	camera_x = 0;
 	character = new Character();
 	statusBar = new StatusBar(ImageHub.HEALTHBAR, 20, 0);
-    endbossBar = new StatusBar(ImageHub.HEALTHBAR_ENDBOSS.orange, 480, 0);
+	endbossBar = new StatusBar(ImageHub.HEALTHBAR_ENDBOSS.orange, 480, 0);
+	endboss = this.level.enemies.find((e) => e instanceof Endboss);
 	bottleAmount = 0;
 	bottleBar = new CountBar(ImageHub.BOTTLE.single, 20, 60, 50, 50, 90);
 	coinAmount = 0;
@@ -57,7 +58,7 @@ class World {
 		this.bottleBar.draw(this.ctx);
 		this.coinBar.count = this.coinAmount;
 		this.coinBar.draw(this.ctx);
-        this.endbossBar.draw(this.ctx);
+		this.endbossBar.draw(this.ctx);
 		requestAnimationFrame(() => this.draw());
 	}
 
@@ -115,6 +116,7 @@ class World {
 		IntervalHub.startInterval(() => this.clearBottles(), 1000 / 10);
 		IntervalHub.startInterval(() => this.checkBottleCollect(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkCoinCollect(), 1000 / 60);
+		IntervalHub.startInterval(() => this.checkEndboss(), 1000 / 60);
 	}
 
 	/**
@@ -162,7 +164,7 @@ class World {
 				if (bottle.isColliding(enemy) && !enemy.isDeadEnemy && !bottle.isSplashed) {
 					if (enemy instanceof Endboss) {
 						enemy.hit();
-                        this.endbossBar.setPercentage(enemy.energy);
+						this.endbossBar.setPercentage(enemy.energy);
 					} else {
 						enemy.die();
 					}
@@ -202,5 +204,22 @@ class World {
 				this.coinAmount++;
 			}
 		});
+	}
+
+	/**
+	 * Activates the endboss when the character gets close.
+	 * @returns
+	 */
+	checkEndboss() {
+		if (!this.endboss || this.endboss.isDead()) return;
+		if (this.character.x > this.endboss.x - 500) {
+			this.endboss.hadFirstContact = true;
+		}
+		if (this.endboss.hadFirstContact) {
+			this.endboss.isAttacking = this.character.x > this.endboss.x - 150;
+			if (!this.endboss.isAttacking) {
+				this.endboss.moveLeft();
+			}
+		}
 	}
 }

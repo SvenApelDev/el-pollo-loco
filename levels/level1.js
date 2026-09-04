@@ -16,13 +16,14 @@ for (let x = -300; x <= 3600; x += 500) {
 
 const enemies = [];
 for (let i = 0; i < 8; i++) {
-    enemies.push(new ChickenNormal());
-    enemies.push(new ChickenSmall());
-    enemies.push(new Endboss());   
+    const baseX = 600 + i * 350;
+    enemies.push(new ChickenNormal(baseX + Math.random() * 150));
+    enemies.push(new ChickenSmall(baseX + 175 + Math.random() * 150));
 }
+enemies.push(new Endboss());   
 
 const bottles = [];
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 10; i++) {
     bottles.push(new Bottle());
 }
 

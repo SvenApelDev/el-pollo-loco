@@ -7,13 +7,13 @@ class ChickenSmall extends MovableObject {
 	/**
 	 * Creates a small chicken at a random position and starts its behaviour.
 	 */
-	constructor() {
+	constructor(x) {
 		super();
 		this.loadImage(ImageHub.CHICKEN_SMALL.walk[0]);
 		this.loadImages(ImageHub.CHICKEN_SMALL.walk);
 		this.loadImages(ImageHub.CHICKEN_SMALL.dead);
 		this.deadImages = ImageHub.CHICKEN_SMALL.dead;
-		this.x = 500 + Math.random() * 3000;
+        this.x = x;
 		this.speed = 0.2 + Math.random() * 0.6;
 		this.animate();
 	}
