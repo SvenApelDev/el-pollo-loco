@@ -2,7 +2,7 @@ class World {
 	canvas;
 	ctx;
 	keyboard;
-	level = level1;
+	level = LevelBuilder.create();
 	camera_x = 0;
 	character = new Character();
 	statusBar = new StatusBar(ImageHub.HEALTHBAR, 20, 0);
@@ -117,6 +117,8 @@ class World {
 		IntervalHub.startInterval(() => this.checkBottleCollect(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkCoinCollect(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkEndboss(), 1000 / 60);
+		IntervalHub.startInterval(() => this.checkGameOver(), 1000 / 60);
+		IntervalHub.startInterval(() => this.checkWin(), 1000 / 60);
 	}
 
 	/**
@@ -181,6 +183,9 @@ class World {
 		this.throwableObjects = this.throwableObjects.filter((bottle) => !bottle.canBeRemoved);
 	}
 
+	/**
+	 * Checks for character-bottle collisions, collects them, and updates the count.
+	 */
 	checkBottleCollect() {
 		this.character.getRealFrame();
 		this.level.bottles.forEach((bottle, index) => {
@@ -216,9 +221,28 @@ class World {
 			this.endboss.hadFirstContact = true;
 		}
 		if (this.endboss.hadFirstContact) {
-			this.endboss.isAttacking = this.character.x > this.endboss.x - 150; {
-				this.endboss.moveLeft();
-			}
+			this.endboss.isAttacking = this.character.x > this.endboss.x - 150;
+			this.endboss.moveLeft();
+		}
+	}
+
+	/**
+	 * Shows the game over screen once the character's death animation finished.
+	 */
+	checkGameOver() {
+		if (this.character.deadFinished) {
+			IntervalHub.stopAllIntervals();
+			document.getElementById("gameOver").classList.remove("hidden");
+		}
+	}
+
+	/**
+	 * Shows the win screen once the endboss is dead.
+	 */
+	checkWin() {
+		if (this.endboss && this.endboss.isDead()) {
+			IntervalHub.stopAllIntervals();
+			document.getElementById("winScreen").classList.remove("hidden");
 		}
 	}
 }

@@ -7,14 +7,14 @@
 		<link rel="stylesheet" href="style.css" />
 
 		<script src="models/drawable-object.class.js"></script>
-        <script src="models/count-bar.class.js"></script>
+		<script src="models/count-bar.class.js"></script>
 		<script src="models/movable-object.class.js"></script>
-        <script src="models/endboss.class.js"></script>
-        <script src="models/bottle.class.js"></script>
-        <script src="models/coin.class.js"></script>
+		<script src="models/endboss.class.js"></script>
+		<script src="models/bottle.class.js"></script>
+		<script src="models/coin.class.js"></script>
 		<script src="models/interval-hub.class.js"></script>
 		<script src="models/image-hub.class.js"></script>
-        <script src="models/throwable-object.class.js"></script>
+		<script src="models/throwable-object.class.js"></script>
 		<script src="models/audio-hub.class.js"></script>
 		<script src="models/statusbar-health.class.js"></script>
 		<script src="models/character.class.js"></script>
@@ -34,8 +34,34 @@
 		</header>
 		<main>
 			<div id="canvasContainer">
-				<canvas id="canvas" width="720" height="480"></canvas>
-				<div id="start-screen"></div>
+				<div id="canvasWrapper">
+					<canvas id="canvas" width="720" height="480"></canvas>
+
+					<section id="startScreen" class="overlay">
+						<button onclick="startGame()">Start</button>
+					</section>
+
+					<section id="gameOver" class="overlay hidden">
+						<button onclick="startGame()">Neustart</button>
+						<button onclick="backToStart()">Startbildschirm</button>
+					</section>
+
+					<section id="winScreen" class="overlay hidden">
+						<button onclick="startGame()">Neustart</button>
+						<button onclick="backToStart()">Startbildschirm</button>
+					</section>
+
+					<section id="touchControls">
+						<div class="touch-left">
+							<button id="btnLeft" class="touch-btn">◀</button>
+							<button id="btnRight" class="touch-btn">▶</button>
+						</div>
+						<div class="touch-right">
+							<button id="btnJump" class="touch-btn">▲</button>
+							<button id="btnThrow" class="touch-btn">✦</button>
+						</div>
+					</section>
+				</div>
 			</div>
 		</main>
 		<footer>

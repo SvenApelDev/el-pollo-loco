@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
 	speedY = 0;
 	currentImage = 0;
 	acceleration = 2.5;
+	deadFinished = false;
 
 	/**
 	 * Moves the object to the left based on its current speed.
@@ -52,6 +53,9 @@ class MovableObject extends DrawableObject {
 			this.currentImage = 0;
 		}
 		this.playAnimationOnce(ImageHub.PEPE.dead);
+		if (this.currentImage >= ImageHub.PEPE.dead.length) {
+			this.deadFinished = true;
+		}
 	}
 
 	/**
