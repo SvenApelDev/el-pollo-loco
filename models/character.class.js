@@ -4,6 +4,8 @@ class Character extends MovableObject {
 	y = 150;
 	x = 100;
 	speed = 5;
+	minX = 100;
+	maxX = 3400;
 	otherDirection = false;
 	lastMovement = 0;
     offset = {top: 140, left: 34, right: 46, bottom: 16};
@@ -46,11 +48,11 @@ class Character extends MovableObject {
 		) {
 			this.lastMovement = Date.now();
 		}
-		if (this.world.keyboard.RIGHT) {
+		if (this.world.keyboard.RIGHT && this.x < this.maxX) {
 			this.moveRight();
 			this.otherDirection = false;
 		}
-		if (this.world.keyboard.LEFT) {
+		if (this.world.keyboard.LEFT && this.x > this.minX) {
 			this.moveLeft();
 			this.otherDirection = true;
 		}

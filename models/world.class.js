@@ -207,7 +207,7 @@ class World {
 	}
 
 	/**
-	 * Activates the endboss when the character gets close.
+	 * Activates the endboss and moves it toward the character.
 	 * @returns
 	 */
 	checkEndboss() {
@@ -216,8 +216,7 @@ class World {
 			this.endboss.hadFirstContact = true;
 		}
 		if (this.endboss.hadFirstContact) {
-			this.endboss.isAttacking = this.character.x > this.endboss.x - 150;
-			if (!this.endboss.isAttacking) {
+			this.endboss.isAttacking = this.character.x > this.endboss.x - 150; {
 				this.endboss.moveLeft();
 			}
 		}

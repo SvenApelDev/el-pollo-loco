@@ -23,7 +23,7 @@ for (let i = 0; i < 8; i++) {
 enemies.push(new Endboss());   
 
 const bottles = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 12; i++) {
     bottles.push(new Bottle());
 }
 
