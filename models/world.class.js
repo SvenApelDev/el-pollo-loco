@@ -230,7 +230,8 @@ class World {
 	 * Shows the game over screen once the character's death animation finished.
 	 */
 	checkGameOver() {
-		if (this.character.deadFinished) {
+		if (this.character.deadFinished && !(this.endboss && this.endboss.isDead())) {
+			console.log("GAMEOVER feuert, endboss energy:", this.endboss?.energy);
 			IntervalHub.stopAllIntervals();
 			document.getElementById("gameOver").classList.remove("hidden");
 		}
@@ -241,6 +242,7 @@ class World {
 	 */
 	checkWin() {
 		if (this.endboss && this.endboss.isDead()) {
+			console.log("WIN feuert");
 			IntervalHub.stopAllIntervals();
 			document.getElementById("winScreen").classList.remove("hidden");
 		}
