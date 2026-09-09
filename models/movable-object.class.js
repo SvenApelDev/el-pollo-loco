@@ -106,7 +106,7 @@ class MovableObject extends DrawableObject {
 	}
 
 	/**
-	 * Reduces energy by 5 and records the time of the hit.
+	 * Reduces energy by 10 and records the time of the hit.
 	 */
 	hit() {
 		this.energy -= 10;
@@ -140,14 +140,7 @@ class MovableObject extends DrawableObject {
 		this.isDeadEnemy = true;
 		this.img = this.imageCache[this.deadImages[0]];
 		this.speed = 0;
-	}
-
-	drawFrame(ctx) {
-		ctx.beginPath();
-		ctx.lineWidth = 2;
-		ctx.strokeStyle = "red";
-		ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width - this.offset.left - this.offset.right, this.height - this.offset.top - this.offset.bottom);
-		ctx.stroke();
+		this.diedAt = Date.now();
 	}
 
 	/**

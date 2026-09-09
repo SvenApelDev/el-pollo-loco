@@ -31,6 +31,18 @@ header {
     color: white;
 }
 
+#startScreen {
+    background-image: url("img/9_intro_outro_screens/start/startscreen_1.png");
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+    background-repeat: no-repeat;
+
+    align-items: center;
+    justify-content: flex-end;
+    padding: 32px;
+}
+
 #winScreen {
     background-image: url("img/You won, you lost/you-win.png");
     background-size: 80%;
@@ -54,17 +66,6 @@ header {
     flex-direction: row;
     align-items: flex-end;
     justify-content: center;
-    padding: 32px;
-}
-
-#startScreen {
-    background-image: url("img/9_intro_outro_screens/start/startscreen_3.jpg");
-    background-size: cover;
-    background-position: 45% center;
-    background-color: transparent;
-
-    align-items: center;
-    justify-content: flex-end;
     padding: 32px;
 }
 
@@ -161,13 +162,6 @@ footer {
 @media (max-width: 1024px) {
     #canvasContainer {
         background-image: url("img/5_background/bg-tablet.jpg");
-    }
-}
-
-@media (max-width: 800px) and (orientation: portrait) {
-    #canvasWrapper {
-        transform: rotate(90deg);
-        transform-origin: center center;
     }
 }
 

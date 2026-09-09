@@ -14,6 +14,7 @@ class World {
 	coinBar = new CountBar(ImageHub.COIN[1], 110, 50, 75, 75, 90);
 	throwableObjects = [];
 	throwCooldown = false;
+	collectLocked = false;
 
 	/**
 	 * Initializes the canvas, input controllers, and starts the render loop.
@@ -50,8 +51,6 @@ class World {
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.throwableObjects);
 		this.addToMap(this.character);
-		this.character.drawFrame(this.ctx);
-		this.level.enemies.forEach((e) => e.drawFrame(this.ctx));
 		this.ctx.translate(-this.camera_x, 0);
 		this.addToMap(this.statusBar);
 		this.bottleBar.count = this.bottleAmount;
@@ -114,30 +113,93 @@ class World {
 		IntervalHub.startInterval(() => this.checkThrow(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkBottleHits(), 1000 / 60);
 		IntervalHub.startInterval(() => this.clearBottles(), 1000 / 10);
-		IntervalHub.startInterval(() => this.checkBottleCollect(), 1000 / 60);
-		IntervalHub.startInterval(() => this.checkCoinCollect(), 1000 / 60);
+		IntervalHub.startInterval(() => this.clearDeadEnemies(), 1000 / 10);
 		IntervalHub.startInterval(() => this.checkEndboss(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkGameOver(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkWin(), 1000 / 60);
 	}
 
 	/**
-	 * Checks collisions between character and enemies.
+	 * Runs all character collision checks in priority order.
+	 * Stops after the first successful action per tick.
 	 */
 	checkCollision() {
 		this.character.getRealFrame();
-		this.level.enemies.forEach((enemy) => {
+		if (this.checkEnemyHit()) return;
+		if (this.checkEnemyKill()) return;
+		if (this.collectLocked) {
+			if (!this.character.isAboveGround()) this.collectLocked = false;
+			return;
+		}
+		if (this.collectBottle()) return;
+		this.collectCoin();
+	}
+
+	/**
+	 * Applies damage if the character collides with an enemy from the side.
+	 * @returns {boolean} True if the character got hit.
+	 */
+	checkEnemyHit() {
+		for (const enemy of this.level.enemies) {
 			enemy.getRealFrame();
-			if (this.character.isColliding(enemy) && !enemy.isDeadEnemy) {
-				if (this.character.isFalling() && !(enemy instanceof Endboss)) {
-					enemy.die();
-					this.character.jump();
-				} else if (!this.character.isHurt()) {
-					this.character.hit();
-					this.statusBar.setPercentage(this.character.energy);
-				}
+			if (this.character.isColliding(enemy) && !enemy.isDeadEnemy && !this.character.isFalling() && !this.character.isHurt()) {
+				this.character.hit();
+				this.statusBar.setPercentage(this.character.energy);
+				return true;
 			}
-		});
+		}
+		return false;
+	}
+
+	/**
+	 * Kills one enemy if the character lands on it from above.
+	 * @returns {boolean} True if an enemy was killed.
+	 */
+	checkEnemyKill() {
+		for (const enemy of this.level.enemies) {
+			enemy.getRealFrame();
+			if (this.character.isColliding(enemy) && !enemy.isDeadEnemy && this.character.isFalling() && !(enemy instanceof Endboss)) {
+				enemy.die();
+				this.character.jump();
+				this.collectLocked = true;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Collects one bottle on collision and updates the count.
+	 * @returns {boolean} True if a bottle was collected.
+	 */
+	collectBottle() {
+		for (let i = 0; i < this.level.bottles.length; i++) {
+			const bottle = this.level.bottles[i];
+			bottle.getRealFrame();
+			if (this.character.isColliding(bottle)) {
+				this.level.bottles.splice(i, 1);
+				this.bottleAmount++;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Collects one coin on collision and updates the total.
+	 * @returns {boolean} True if a coin was collected.
+	 */
+	collectCoin() {
+		for (let i = 0; i < this.level.coins.length; i++) {
+			const coin = this.level.coins[i];
+			coin.getRealFrame();
+			if (this.character.isColliding(coin)) {
+				this.level.coins.splice(i, 1);
+				this.coinAmount++;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -184,31 +246,10 @@ class World {
 	}
 
 	/**
-	 * Checks for character-bottle collisions, collects them, and updates the count.
+	 * Removes enemies whose death animation has been shown for 1.5s.
 	 */
-	checkBottleCollect() {
-		this.character.getRealFrame();
-		this.level.bottles.forEach((bottle, index) => {
-			bottle.getRealFrame();
-			if (this.character.isColliding(bottle)) {
-				this.level.bottles.splice(index, 1);
-				this.bottleAmount++;
-			}
-		});
-	}
-
-	/**
-	 * Checks for character-coin collisions, removes collected coins, and updates total.
-	 */
-	checkCoinCollect() {
-		this.character.getRealFrame();
-		this.level.coins.forEach((coin, index) => {
-			coin.getRealFrame();
-			if (this.character.isColliding(coin)) {
-				this.level.coins.splice(index, 1);
-				this.coinAmount++;
-			}
-		});
+	clearDeadEnemies() {
+		this.level.enemies = this.level.enemies.filter((enemy) => !enemy.diedAt || Date.now() - enemy.diedAt < 1500);
 	}
 
 	/**
@@ -231,7 +272,6 @@ class World {
 	 */
 	checkGameOver() {
 		if (this.character.deadFinished && !(this.endboss && this.endboss.isDead())) {
-			console.log("GAMEOVER feuert, endboss energy:", this.endboss?.energy);
 			IntervalHub.stopAllIntervals();
 			document.getElementById("gameOver").classList.remove("hidden");
 		}
@@ -242,7 +282,6 @@ class World {
 	 */
 	checkWin() {
 		if (this.endboss && this.endboss.isDead()) {
-			console.log("WIN feuert");
 			IntervalHub.stopAllIntervals();
 			document.getElementById("winScreen").classList.remove("hidden");
 		}
