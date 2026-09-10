@@ -112,7 +112,7 @@ class MovableObject extends DrawableObject {
 	 * Reduces energy by 10 and records the time of the hit.
 	 */
 	hit() {
-		this.energy -= 10;
+		this.energy -= 20;
 		if (this.energy < 0) {
 			this.energy = 0;
 		} else {

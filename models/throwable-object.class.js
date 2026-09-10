@@ -54,6 +54,7 @@ class ThrowableObject extends MovableObject {
 			this.isSplashed = true;
 			this.currentImage = 0;
 			this.loadImages(ImageHub.BOTTLE.splash);
+			AudioHub.playOne(AudioHub.BOTTLE.break);
             setTimeout(() => this.canBeRemoved = true, 300);
 		}
 		this.playAnimationOnce(ImageHub.BOTTLE.splash);
