@@ -35,7 +35,7 @@ class Endboss extends MovableObject {
 	 * Toggle between walk and alert display during the case.
 	 */
 	toggleAlert() {
-		if (this.hadFirstContact) (this, (this.showAlert = !this.showAlert));
+		if (this.hadFirstContact) this.showAlert = !this.showAlert;
 	}
 
 	/**
@@ -66,11 +66,19 @@ class Endboss extends MovableObject {
 		}
 	}
 
+	/**
+	 * Plays the endboss death animation once, with sound and end delay.
+	 */
 	playDeadEndboss() {
 		if (!this.deadStarted) {
 			this.deadStarted = true;
 			this.currentImage = 0;
+			AudioHub.playOne(AudioHub.ENDBOSS.dead);
 		}
 		this.playAnimationOnce(ImageHub.ENDBOSS.dead);
+		if (this.currentImage >= ImageHub.ENDBOSS.dead.length) {
+			this.deadDelay++;
+			if (this.deadDelay >= 6) this.deadFinished = true;
+		}
 	}
 }

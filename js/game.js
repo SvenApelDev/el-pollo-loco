@@ -1,6 +1,9 @@
+
+
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let currentMusic = AudioHub.GAME.end;
 
 /**
  * Prepares the canvas and binds the touch controls on page load.
@@ -8,6 +11,7 @@ let keyboard = new Keyboard();
 function init() {
 	canvas = document.getElementById("canvas");
 	bindTouchControls();
+	updateMuteButton();
 }
 
 /**
@@ -19,13 +23,72 @@ function startGame() {
 	document.getElementById("gameOver").classList.add("hidden");
 	document.getElementById("winScreen").classList.add("hidden");
 	world = new World(canvas, keyboard);
+	startGameMusicAfterIntro();
 }
+
+/**
+ * Plays a sound once, then starts the given follow-up music.
+ * @param {MyAudio} sound - The sound to play first.
+ * @param {MyAudio} nextMusic - the music to start after it ends.
+ */
+function playThen(sound, nextMusic) {
+	AudioHub.stopAll();
+	currentMusic = nextMusic;
+	AudioHub.playOne(sound);
+	sound.file.addEventListener("ended", () => AudioHub.playOne(nextMusic), {once: true});
+}
+
+
+/**
+ * Starts the gameplay music once the intro sound has finished.
+ */
+function startGameMusicAfterIntro() {
+	playThen(AudioHub.GAME.start, AudioHub.GAME.gamePlay);
+}
+
+/**
+ * Plays the lose jingle, then returns to the idle end music.
+ */
+function playGameOverMusic() {
+	playThen(AudioHub.GAME.lose, AudioHub.GAME.end);
+}
+
+/**
+ * Plays the win jingle, then returns to the idle end music.
+ */
+function playWinMusic() {
+	playThen(AudioHub.GAME.win, AudioHub.GAME.end);
+}
+
+
+/**
+ * Toggles all game audio and updates the button icon.
+ */
+function toggleMute() {
+	AudioHub.toggleMute();
+	updateMuteButton();
+	if (!AudioHub.muted) {
+		AudioHub.playOne(currentMusic);
+	}
+}
+
+/**
+ * Updates the mute button icon to match the current mute state.
+ */
+function updateMuteButton() {
+	const btn = document.getElementById("muteBtn");
+	btn.textContent = AudioHub.muted ? "🔇" : "🔊";
+}
+
 
 /**
  * Returns to start screen after the game has ended.
  */
 
 function backToStart() {
+	AudioHub.stopAll();
+	currentMusic = AudioHub.GAME.end;
+	AudioHub.playOne(AudioHub.GAME.end);
 	document.getElementById("gameOver").classList.add("hidden");
 	document.getElementById("winScreen").classList.add("hidden");
 	document.getElementById("startScreen").classList.remove("hidden");
@@ -60,7 +123,10 @@ function bindTouchButton(id, key) {
 
 window.addEventListener("keydown", (event) => {
 	let key = Keyboard.KEYS[event.keyCode];
-	if (key) keyboard[key] = true;
+	if (key) {
+		if (key === "SPACE") event.preventDefault();
+		keyboard[key] = true;
+	}
 });
 
 window.addEventListener("keyup", (event) => {

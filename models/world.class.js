@@ -121,18 +121,24 @@ class World {
 
 	/**
 	 * Runs all character collision checks in priority order.
-	 * Stops after the first successful action per tick.
+	 * Enemy actions block bottle pickup until landing; coins are always collectable.
 	 */
 	checkCollision() {
 		this.character.getRealFrame();
+		this.updateCollectLock();
 		if (this.checkEnemyHit()) return;
 		if (this.checkEnemyKill()) return;
-		if (this.collectLocked) {
-			if (!this.character.isAboveGround()) this.collectLocked = false;
-			return;
-		}
-		if (this.collectBottle()) return;
+		if(!this.collectLocked && this.collectBottle()) return;
 		this.collectCoin();
+	}
+
+	/**
+	 * Release the bottle-collect lock once the character is back on the ground.
+	 */
+	updateCollectLock() {
+		if(this.collectLocked && !this.character.isAboveGround()) {
+			this.collectLocked = false;
+		}
 	}
 
 	/**
@@ -160,6 +166,7 @@ class World {
 			enemy.getRealFrame();
 			if (this.character.isColliding(enemy) && !enemy.isDeadEnemy && this.character.isFalling() && !(enemy instanceof Endboss)) {
 				enemy.die();
+				AudioHub.playOne(AudioHub.CHICKEN.dead);
 				this.character.jump();
 				this.collectLocked = true;
 				return true;
@@ -179,6 +186,7 @@ class World {
 			if (this.character.isColliding(bottle)) {
 				this.level.bottles.splice(i, 1);
 				this.bottleAmount++;
+				AudioHub.playOne(AudioHub.COLLECT.bottle);
 				return true;
 			}
 		}
@@ -196,6 +204,7 @@ class World {
 			if (this.character.isColliding(coin)) {
 				this.level.coins.splice(i, 1);
 				this.coinAmount++;
+				AudioHub.playOne(AudioHub.COLLECT.coin);
 				return true;
 			}
 		}
@@ -211,6 +220,7 @@ class World {
 			this.throwableObjects.push(bottle);
 			this.bottleAmount--;
 			this.throwCooldown = true;
+			AudioHub.playOne(AudioHub.BOTTLE.throw);
 		}
 		if (!this.keyboard.D) {
 			this.throwCooldown = false;
@@ -228,6 +238,7 @@ class World {
 				if (bottle.isColliding(enemy) && !enemy.isDeadEnemy && !bottle.isSplashed) {
 					if (enemy instanceof Endboss) {
 						enemy.hit();
+						AudioHub.playOne(AudioHub.ENDBOSS.hurt);
 						this.endbossBar.setPercentage(enemy.energy);
 					} else {
 						enemy.die();
@@ -274,6 +285,7 @@ class World {
 		if (this.character.deadFinished && !(this.endboss && this.endboss.isDead())) {
 			IntervalHub.stopAllIntervals();
 			document.getElementById("gameOver").classList.remove("hidden");
+			playGameOverMusic();
 		}
 	}
 
@@ -281,9 +293,10 @@ class World {
 	 * Shows the win screen once the endboss is dead.
 	 */
 	checkWin() {
-		if (this.endboss && this.endboss.isDead()) {
+		if (this.endboss && this.endboss.deadFinished) {
 			IntervalHub.stopAllIntervals();
 			document.getElementById("winScreen").classList.remove("hidden");
+			playWinMusic();
 		}
 	}
 }

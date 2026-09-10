@@ -11,6 +11,9 @@ class Character extends MovableObject {
     offset = {top: 140, left: 34, right: 46, bottom: 16};
     deadStarted = false;
 	world;
+	isWalking = false;
+	isSnoring = false;
+	isHurting = false;
 
 	/**
 	 * Creates the character, loads its images and places it in the world.
@@ -34,21 +37,93 @@ class Character extends MovableObject {
 	 */
 	animate() {
 		IntervalHub.startInterval(() => this.checkMovement(), 1000 / 60);
-		IntervalHub.startInterval(() => this.checkAnimation(), 1000 / 6);
+		IntervalHub.startInterval(() => this.updateAnimationAndSound(), 1000 / 6);
+	}
+
+	/**
+	 * Updates animation and state sounds on the same tick.
+	 */
+	updateAnimationAndSound() {
+		this.checkAnimation();
+		this.updateStateSounds();
+	}
+
+/**
+ * Plays the animation that matches the character's current state.
+ */
+	checkAnimation() {
+		if(this.isDead()) return this.playDeadAnimation();
+		this.playAnimation(this.currentAnimation());
+	}
+
+	/**
+	 * Returns the image set for the character's current non-dead state.
+	 * @returns {string[]} The animation frames to play.
+	 */
+	currentAnimation() {
+		if(this.isHurt()) return ImageHub.PEPE.hurt;
+		if (this.isAboveGround()) return ImageHub.PEPE.jump;
+		if(this.isMoving()) return ImageHub.PEPE.walk;
+		if(this.isSleeping()) return ImageHub.PEPE.longIdle;
+		return ImageHub.PEPE.idle;
+	}
+
+	/**
+	 * Handles the looping snore sound and the one-shot hurt sound.
+	 */
+	updateStateSounds() {
+		this.updateSnoreSound();
+		this.updateHurtSound();
+	}
+
+	/**
+	 * Loops the snore sound while sleeping, stops it otherwise.
+	 */
+	updateSnoreSound() {
+		if(this.isSleeping() && !this.isSnoring) {
+			AudioHub.playOne(AudioHub.PEPE.snore);
+			this.isSnoring = true;
+		} else if (!this.isSleeping()) {
+			AudioHub.stopOne(AudioHub.PEPE.snore);
+			this.isSnoring = false;
+		}
+	}
+
+	/**
+	 * Plays the hurt sound once per hurt phase.
+	 */
+	updateHurtSound() {
+		if(this.isHurt() && !this.isHurting) {
+			AudioHub.playOne(AudioHub.PEPE.hurt);
+			this.isHurting = true;
+		} else if (!this.isHurt()) {
+			this.isHurting = false;
+		}
 	}
 
 	/**
 	 * Reads keyboard input and moves the character accordingly.
 	 */
 	checkMovement() {
-		if (
-			this.world.keyboard.RIGHT ||
-			this.world.keyboard.LEFT ||
-			this.world.keyboard.SPACE
-		) {
+		this.updateLastMovement();
+		this.handleWalk();
+		this.handleJump();
+	}
+
+	/**
+	 * Refreshes the last-movement timestamp on any input.
+	 */
+	updateLastMovement() {
+		if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
 			this.lastMovement = Date.now();
 		}
-		if (this.world.keyboard.RIGHT && this.x < this.maxX) {
+	}
+
+	/**
+	 * Moves the character left or right based on input.
+	 */
+	handleWalk() {
+		if(this.world.keyboard.RIGHT && this.x < this.maxX) {
 			this.moveRight();
 			this.otherDirection = false;
 		}
@@ -56,27 +131,30 @@ class Character extends MovableObject {
 			this.moveLeft();
 			this.otherDirection = true;
 		}
-		if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-			this.jump();
+		this.updateWalkSound();
+	}
+
+	/**
+	 * Starts the walk sound while moving on the ground, stops it otherwise.
+	 */
+	updateWalkSound() {
+		const walking = this.isMoving() && !this.isAboveGround();
+		if(walking && !this.isWalking) {
+			AudioHub.playOne(AudioHub.PEPE.walk);
+			this.isWalking = true;
+		} else if(!walking) {
+			AudioHub.stopOne(AudioHub.PEPE.walk);
+			this.isWalking = false;
 		}
 	}
 
 	/**
-	 * Plays the animation that matches the character's current state.
+	 * Makes the character jump and plays the jump sound.
 	 */
-	checkAnimation() {
-        if (this.isDead()) {
-            this.playDeadAnimation();
-        } else if (this.isHurt()) {
-            this.playAnimation(ImageHub.PEPE.hurt);
-        } else if (this.isAboveGround()) {
-			this.playAnimation(ImageHub.PEPE.jump);
-		} else if (this.isMoving()) {
-			this.playAnimation(ImageHub.PEPE.walk);
-		} else if (this.isSleeping()) {
-			this.playAnimation(ImageHub.PEPE.longIdle);
-		} else {
-			this.playAnimation(ImageHub.PEPE.idle);
+	handleJump() {
+		if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+			this.jump();
+			AudioHub.playOne(AudioHub.PEPE.jump);
 		}
 	}
 
