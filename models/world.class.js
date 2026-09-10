@@ -150,6 +150,7 @@ class World {
 			enemy.getRealFrame();
 			if (this.character.isColliding(enemy) && !enemy.isDeadEnemy && !this.character.isFalling() && !this.character.isHurt()) {
 				this.character.hit();
+				AudioHub.playOne(AudioHub.PEPE.hurt);
 				this.statusBar.setPercentage(this.character.energy);
 				return true;
 			}

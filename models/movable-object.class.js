@@ -52,7 +52,7 @@ class MovableObject extends DrawableObject {
 		if (!this.deadStarted) {
 			this.deadStarted = true;
 			this.currentImage = 0;
-			AudioHub.playOne(AudioHub.PEPE.deqd);
+			AudioHub.playOne(AudioHub.PEPE.dead);
 		}
 		this.playAnimationOnce(ImageHub.PEPE.dead);
 		if (this.currentImage >= ImageHub.PEPE.dead.length) {

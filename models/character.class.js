@@ -13,7 +13,6 @@ class Character extends MovableObject {
 	world;
 	isWalking = false;
 	isSnoring = false;
-	isHurting = false;
 
 	/**
 	 * Creates the character, loads its images and places it in the world.
@@ -45,7 +44,7 @@ class Character extends MovableObject {
 	 */
 	updateAnimationAndSound() {
 		this.checkAnimation();
-		this.updateStateSounds();
+		this.updateSnoreSound();
 	}
 
 /**
@@ -69,14 +68,6 @@ class Character extends MovableObject {
 	}
 
 	/**
-	 * Handles the looping snore sound and the one-shot hurt sound.
-	 */
-	updateStateSounds() {
-		this.updateSnoreSound();
-		this.updateHurtSound();
-	}
-
-	/**
 	 * Loops the snore sound while sleeping, stops it otherwise.
 	 */
 	updateSnoreSound() {
@@ -86,18 +77,6 @@ class Character extends MovableObject {
 		} else if (!this.isSleeping()) {
 			AudioHub.stopOne(AudioHub.PEPE.snore);
 			this.isSnoring = false;
-		}
-	}
-
-	/**
-	 * Plays the hurt sound once per hurt phase.
-	 */
-	updateHurtSound() {
-		if(this.isHurt() && !this.isHurting) {
-			AudioHub.playOne(AudioHub.PEPE.hurt);
-			this.isHurting = true;
-		} else if (!this.isHurt()) {
-			this.isHurting = false;
 		}
 	}
 
