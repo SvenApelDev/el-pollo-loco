@@ -12,6 +12,7 @@ function init() {
 	canvas = document.getElementById("canvas");
 	bindTouchControls();
 	updateMuteButton();
+	initInstructions();
 }
 
 /**
@@ -133,3 +134,27 @@ window.addEventListener("keyup", (event) => {
 	let key = Keyboard.KEYS[event.keyCode];
 	if (key) keyboard[key] = false;
 });
+
+/**
+ * Opens the instructions dialog.
+ */
+function openInstructions() {
+	document.getElementById('instructions').showModal();
+}
+
+/**
+ * Close the instructions dialog.
+ */
+function closeInstructions() {
+	document.getElementById('instructions').close();
+}
+
+/**
+ * Binds the backdrop click of the instructions dialog to close it.
+ */
+function initInstructions() {
+	const dialog = document.getElementById('instructions');
+	dialog.addEventListener('click', (e) => {
+		if (e.target === dialog) closeInstructions();
+	});
+}

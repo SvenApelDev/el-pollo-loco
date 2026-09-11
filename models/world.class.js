@@ -6,7 +6,7 @@ class World {
 	camera_x = 0;
 	character = new Character();
 	statusBar = new StatusBar(ImageHub.HEALTHBAR, 20, 0);
-	endbossBar = new StatusBar(ImageHub.HEALTHBAR_ENDBOSS.orange, 480, 0);
+	endbossBar = new StatusBar(ImageHub.HEALTHBAR_ENDBOSS.orange, 480, 10);
 	endboss = this.level.enemies.find((e) => e instanceof Endboss);
 	bottleAmount = 0;
 	bottleBar = new CountBar(ImageHub.BOTTLE.single, 20, 60, 50, 50, 90);

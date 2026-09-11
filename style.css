@@ -1,4 +1,26 @@
 
+@font-face {
+  font-family: 'Luckiest Guy';
+  src: url('./fonts/LuckiestGuy-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('./fonts/Nunito-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('./fonts/Nunito-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+
 *{
     margin: 0;
     padding: 0;
@@ -6,10 +28,39 @@
     scroll-behavior: smooth;
 }
 
+h1 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 120px;
+    letter-spacing: 6px;
+    color: #ffc21c;
+    text-shadow: 0 4px 0 #b8720a, 0 6px 6px rgba(0,0,0,.4);
+}
+
+ul {
+    list-style: none;
+    line-height: 1.8;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: url("img/5_background/bg-start.png") center / cover no-repeat fixed;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 108px;
+    min-height: 0;
+}
+
 header {
     width: 100%;
-    height: 60px;
-    padding: 12px;
+    padding: 68px 12px 0;
     text-align: center;
 }
 
@@ -29,6 +80,51 @@ header {
     border-radius: 22px;
     background: rgba(0, 0, 0, 0.6);
     color: white;
+}
+
+#instructions::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#instructions[open] {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+#instructions {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 480px;
+    border: none;
+    border-radius: 16px;
+    padding: 34px;
+    background: #ffdca0;
+    color: #221202;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+
+    h2 {
+       font-size: 32px; 
+       font-weight: 700;
+    }
+}
+
+.dialog-close {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 0;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #7a4a00;
+    color: #ffdca0;
+    cursor: pointer;
 }
 
 #startScreen {
@@ -89,12 +185,6 @@ header {
 
 #canvasContainer {
     width: 100dvw;
-    height: 90dvh;
-    background-image: url(img/5_background/bg-start.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,6 +210,7 @@ header {
 button {
     cursor: pointer;
     padding: 12px 24px;
+    font-family: inherit;
     font-size: 20px;
 }
 
@@ -135,6 +226,44 @@ button {
     border-radius: 8px;
     background: rgba(0, 0, 0, 0.4);
     cursor: pointer;
+}
+
+.legal {
+    width: fit-content;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 32px;
+    background: rgba(255, 220, 160, 0.95);
+    color: #382302;
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    flex: none;
+
+    h1 {
+        font-family: 'Luckiest Guy', cursive;
+        font-size: 48px;
+        color: #7a4a00;
+        text-shadow: none;
+        margin-bottom: 16px;
+    }
+
+    h2 {
+        margin: 20px 0 8px;
+    }
+
+    .back-link {
+        padding-top: 32px;
+        color: inherit;
+        font-size: 18px;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
 }
 
 #touchControls {
@@ -170,17 +299,34 @@ button {
 }
 
 footer {
-    background-color: brown;
+    width: 100%;
+    padding: 32px;
+    color: #ffdca0;
+    text-align: center;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+
+    .impressum {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .impressum:hover {
+        text-decoration: underline;
+    }
 }
 
+
 @media (max-width: 1024px) {
-    #canvasContainer {
+    body {
         background-image: url("img/5_background/bg-tablet.jpg");
     }
 }
 
 @media (max-width: 600px) {
-    #canvasContainer {
+    body {
         background-image: url("img/5_background/bg-mobile.jpg");
     }
 }

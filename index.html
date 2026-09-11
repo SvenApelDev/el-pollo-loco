@@ -4,6 +4,9 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>EL POLLO LOCO</title>
+
+		<link rel="icon" href="img/2_character_pepe/pepe-favicon.png" type="image/png" />
+
 		<link rel="stylesheet" href="style.css" />
 
 		<script src="models/drawable-object.class.js"></script>
@@ -30,7 +33,7 @@
 	</head>
 	<body onload="init()">
 		<header>
-			<h1>El Pollo Loco</h1>
+			<h1 class="game-title">El Pollo Loco</h1>
 		</header>
 		<main>
 			<div id="canvasContainer">
@@ -41,6 +44,7 @@
 
 					<section id="startScreen" class="overlay">
 						<button onclick="startGame()">Start</button>
+						<button onclick="openInstructions()">Anleitung</button>
 					</section>
 
 					<section id="gameOver" class="overlay hidden">
@@ -65,10 +69,26 @@
 					</section>
 				</div>
 			</div>
+			<dialog id="instructions">
+				<button class="dialog-close" onclick="closeInstructions()">X</button>
+				<div>
+					<h2>Worum geht's</h2>
+					<p class="game-desc">Hüpf mit Pepe durch die Wüste, sammle Münzen und Flaschen und zeig den verrückten Hühnern, wer der Boss ist!</p>
+				</div>
+				<div>
+					<h2>Steuerung</h2>
+					<ul>
+						<li>◀: Pepe nach links bewegen</li>
+						<li>▶: Pepe nach rechts bewegen</li>
+						<li>Space: Pepe springt hoch</li>
+						<li>D: Pepe wirft eine Flasche</li>
+					</ul>
+				</div>
+			</dialog>
 		</main>
 		<footer>
-			<p class="copyright"></p>
-			<p class="impressum"></p>
+			<p class="copyright">© 2026 Sven Apel</p>
+			<a href="impressum.html" class="impressum">Impressum</a>
 		</footer>
 	</body>
 </html>
