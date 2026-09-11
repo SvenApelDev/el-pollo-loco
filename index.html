@@ -32,6 +32,9 @@
 		<script src="js/game.js"></script>
 	</head>
 	<body onload="init()">
+		<div id="rotateHint">
+			<p>Bitte drehe dein Smartphone ins Querformat, um zu spielen.</p>
+		</div>
 		<header>
 			<h1 class="game-title">El Pollo Loco</h1>
 		</header>
@@ -59,29 +62,30 @@
 
 					<section id="touchControls">
 						<div class="touch-left">
-							<button id="btnLeft" class="touch-btn">◀</button>
-							<button id="btnRight" class="touch-btn">▶</button>
+							<button id="btnLeft" class="touch-btn"><img src="img/icons/ic-arrow-left.svg" alt="Move left" class="btn-icon" /></button>
+							<button id="btnRight" class="touch-btn"><img src="img/icons/ic-arrow-right.svg" alt="Move right" class="btn-icon" /></button>
 						</div>
 						<div class="touch-right">
-							<button id="btnJump" class="touch-btn">▲</button>
-							<button id="btnThrow" class="touch-btn">✦</button>
+							<button id="btnJump" class="touch-btn"><img src="img/icons/ic-jump.svg" alt="Jump" class="btn-icon" /></button>
+							<button id="btnThrow" class="touch-btn"><img src="img/icons/ic-throw.svg" alt="Throw bottle" class="btn-icon" /></button>
 						</div>
 					</section>
 				</div>
 			</div>
 			<dialog id="instructions">
 				<button class="dialog-close" onclick="closeInstructions()">X</button>
+				<h2>Anleitung</h2>
 				<div>
-					<h2>Worum geht's</h2>
+					<h3>Worum geht's</h2>
 					<p class="game-desc">Hüpf mit Pepe durch die Wüste, sammle Münzen und Flaschen und zeig den verrückten Hühnern, wer der Boss ist!</p>
 				</div>
 				<div>
-					<h2>Steuerung</h2>
+					<h3>Steuerung</h2>
 					<ul>
-						<li>◀: Pepe nach links bewegen</li>
-						<li>▶: Pepe nach rechts bewegen</li>
-						<li>Space: Pepe springt hoch</li>
-						<li>D: Pepe wirft eine Flasche</li>
+						<li><img src="img/icons/ic-arrow-left.svg" alt="" class="key-icon" /> Pfeiltaste links: Pepe nach links bewegen</li>
+						<li><img src="img/icons/ic-arrow-right.svg" alt="" class="key-icon" /> Pfeiltaste rechts: Pepe nach rechts bewegen</li>
+						<li><img src="img/icons/ic-space.svg" alt="" class="key-icon" />Spacetaste: Pepe springt hoch</li>
+						<li><img src="img/icons/ic-d.svg" alt="" class="key-icon" /> Taste "D": Pepe wirft eine Flasche</li>
 					</ul>
 				</div>
 			</dialog>
