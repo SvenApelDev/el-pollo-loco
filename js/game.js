@@ -25,6 +25,7 @@ function startGame() {
 	document.getElementById("winScreen").classList.add("hidden");
 	world = new World(canvas, keyboard);
 	startGameMusicAfterIntro();
+	document.getElementById("touchControls").classList.add("active");
 }
 
 /**
@@ -78,7 +79,7 @@ function toggleMute() {
  */
 function updateMuteButton() {
 	const btn = document.getElementById("muteBtn");
-	btn.textContent = AudioHub.muted ? "🔇" : "🔊";
+	btn.classList.toggle("muted", AudioHub.muted);
 }
 
 
@@ -93,6 +94,7 @@ function backToStart() {
 	document.getElementById("gameOver").classList.add("hidden");
 	document.getElementById("winScreen").classList.add("hidden");
 	document.getElementById("startScreen").classList.remove("hidden");
+	document.getElementById("touchControls").classList.remove("active");
 }
 
 /**
