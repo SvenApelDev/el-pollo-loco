@@ -380,6 +380,9 @@ footer {
 }
 
 @media (pointer: coarse) and (orientation: portrait) {
+    header, main, footer {
+        display: none;
+    }
 
     #rotateHint {
         position: fixed;
@@ -412,6 +415,7 @@ footer {
     main {
         padding: 0;
         align-items: center;
+        height: 100dvh;
     }
 
     header, footer {
@@ -420,8 +424,8 @@ footer {
 
     #canvasWrapper {
         width: auto;
-        height: 100dvh;
-        max-height: 100dvh;
+        height: 100%;
+        max-height: 100%;
     }
 
     #touchControls.active {
