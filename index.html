@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,14 +43,15 @@
 				<div id="canvasWrapper">
 					<canvas id="canvas" width="720" height="480"></canvas>
 
-			<button id="muteBtn" onclick="toggleMute()">
-				<img src="img/icons/ic-sound-on.svg" alt="Turn off sound" class="btn-icon icon-sound-on" />
-				<img src="img/icons/ic-sound-off.svg" alt="Turn on sound" class="btn-icon icon-sound-off" />
-			</button>
+					<button id="muteBtn" onclick="toggleMute()">
+						<img src="img/icons/ic-sound-on.svg" alt="Turn off sound" class="btn-icon icon-sound-on" />
+						<img src="img/icons/ic-sound-off.svg" alt="Turn on sound" class="btn-icon icon-sound-off" />
+					</button>
 
 					<section id="startScreen" class="overlay">
 						<button onclick="startGame()">Start</button>
-						<button onclick="openInstructions()">Anleitung</button>
+						<button onclick="openDialog('instructions')">Anleitung</button>
+						<a class="imprint-link" onclick="openDialog('imprint')">Impressum</a>
 					</section>
 
 					<section id="gameOver" class="overlay hidden">
@@ -75,21 +76,37 @@
 					</section>
 				</div>
 			</div>
-			<dialog id="instructions">
-				<button class="dialog-close" onclick="closeInstructions()">X</button>
+			<dialog id="instructions" class="info-dialog">
+				<button class="dialog-close" onclick="closeDialog('instructions')">X</button>
 				<h2>Anleitung</h2>
 				<div>
-					<h3>Worum geht's</h2>
+					<h3>Worum geht's</h3>
 					<p class="game-desc">Hüpf mit Pepe durch die Wüste, sammle Münzen und Flaschen und zeig den verrückten Hühnern, wer der Boss ist!</p>
 				</div>
 				<div>
-					<h3>Steuerung</h2>
+					<h3>Steuerung</h3>
 					<ul>
 						<li><img src="img/icons/ic-arrow-left.svg" alt="" class="key-icon" /> Pfeiltaste links: Pepe nach links bewegen</li>
 						<li><img src="img/icons/ic-arrow-right.svg" alt="" class="key-icon" /> Pfeiltaste rechts: Pepe nach rechts bewegen</li>
 						<li><img src="img/icons/ic-space.svg" alt="" class="key-icon" />Spacetaste: Pepe springt hoch</li>
 						<li><img src="img/icons/ic-d.svg" alt="" class="key-icon" /> Taste "D": Pepe wirft eine Flasche</li>
 					</ul>
+				</div>
+			</dialog>
+			<dialog id="imprint" class="info-dialog">
+				<button class="dialog-close" onclick="closeDialog('imprint')">X</button>
+				<h2>Impressum</h2>
+				<div>
+					<h3>Angaben gemäß § 5 DDG</h3>
+					<p>Sven Apel<br />Hainstraße 4<br />08523 Plauen</p>
+				</div>
+				<div>
+					<h3>Kontakt</h3>
+					<p>E-Mail: svenapel@web.de</p>
+				</div>
+				<div>
+					<h3>Hinweis</h3>
+					<p>Dies ist ein Lernprojekt im Rahmen meiner Weiterbildung zum Frontend-Entwickler bei der Developer Akademie.</p>
 				</div>
 			</dialog>
 		</main>

@@ -85,17 +85,17 @@ header {
     color: white;
 }
 
-#instructions::backdrop {
+.info-dialog::backdrop {
     background: rgba(0, 0, 0, 0.6);
 }
 
-#instructions[open] {
+.info-dialog[open] {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
 
-#instructions {
+.info-dialog {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -108,6 +108,8 @@ header {
     color: #382302;
     font-family: 'Nunito', sans-serif;
     font-size: 18px;
+    max-height: 90dvh;
+    overflow-y: auto;
 
     box-shadow: 0px 9px 46px 4px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0px 9px 46px 4px rgba(0, 0, 0, 0.5);
@@ -120,7 +122,7 @@ header {
     }
 
     h3 {
-       font-size: 24px; 
+       font-size: 24px;
        font-weight: 700;
     }
 }
@@ -136,6 +138,12 @@ header {
     border: none;
     border-radius: 8px;
     background: #7a4a00;
+    color: #ffdca0;
+    cursor: pointer;
+}
+
+.imprint-link {
+    display: none;
     color: #ffdca0;
     cursor: pointer;
 }
@@ -206,14 +214,14 @@ header {
 #canvasWrapper {
     position: relative;
     width: clamp(280px, 100%, 720px);
-    aspect-ratio: 3 / 2;    
+    aspect-ratio: 3 / 2;
     }
 
 #canvasWrapper canvas {
     display: block;
     width: 100%;
     height: 100%;
-    background-color: transparent;    
+    background-color: transparent;
     border-radius: 24px;
     box-shadow: 0px 9px 46px 4px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0px 9px 46px 4px rgba(0, 0, 0, 0.5);
@@ -429,6 +437,10 @@ footer {
     }
 
     #touchControls.active {
+        display: block;
+    }
+
+    .imprint-link {
         display: block;
     }
 }

@@ -1,5 +1,3 @@
-
-
 let canvas;
 let world;
 let keyboard = new Keyboard();
@@ -12,13 +10,12 @@ function init() {
 	canvas = document.getElementById("canvas");
 	bindTouchControls();
 	updateMuteButton();
-	initInstructions();
+	initDialogs();
 }
 
 /**
  * Starts a new game and hides all screen overlays.
  */
-
 function startGame() {
 	document.getElementById("startScreen").classList.add("hidden");
 	document.getElementById("gameOver").classList.add("hidden");
@@ -37,9 +34,8 @@ function playThen(sound, nextMusic) {
 	AudioHub.stopAll();
 	currentMusic = nextMusic;
 	AudioHub.playOne(sound);
-	sound.file.addEventListener("ended", () => AudioHub.playOne(nextMusic), {once: true});
+	sound.file.addEventListener("ended", () => AudioHub.playOne(nextMusic), { once: true });
 }
-
 
 /**
  * Starts the gameplay music once the intro sound has finished.
@@ -62,7 +58,6 @@ function playWinMusic() {
 	playThen(AudioHub.GAME.win, AudioHub.GAME.end);
 }
 
-
 /**
  * Toggles all game audio and updates the button icon.
  */
@@ -82,11 +77,9 @@ function updateMuteButton() {
 	btn.classList.toggle("muted", AudioHub.muted);
 }
 
-
 /**
  * Returns to start screen after the game has ended.
  */
-
 function backToStart() {
 	AudioHub.stopAll();
 	currentMusic = AudioHub.GAME.end;
@@ -138,25 +131,28 @@ window.addEventListener("keyup", (event) => {
 });
 
 /**
- * Opens the instructions dialog.
+ * Opens the dialog with the given id.
+ * @param {string} id - The dialog element id.
  */
-function openInstructions() {
-	document.getElementById('instructions').showModal();
+function openDialog(id) {
+	document.getElementById(id).showModal();
 }
 
 /**
- * Close the instructions dialog.
+ * Closes the dialog with the given id.
+ * @param {string} id - The dialog element id.
  */
-function closeInstructions() {
-	document.getElementById('instructions').close();
+function closeDialog(id) {
+	document.getElementById(id).close();
 }
 
 /**
- * Binds the backdrop click of the instructions dialog to close it.
+ * Closes each info dialog when its backdrop is clicked.
  */
-function initInstructions() {
-	const dialog = document.getElementById('instructions');
-	dialog.addEventListener('click', (e) => {
-		if (e.target === dialog) closeInstructions();
+function initDialogs() {
+	document.querySelectorAll(".info-dialog").forEach((dialog) => {
+		dialog.addEventListener("click", (e) => {
+			if (e.target === dialog) dialog.close();
+		});
 	});
 }
