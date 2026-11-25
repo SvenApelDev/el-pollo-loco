@@ -1,7 +1,7 @@
 class ChickenNormal extends MovableObject {
-	height = 60;
-	width = 60;
-	y = 360;
+	height = 80;
+	width = 80;
+	y = 340;
 	offset = { top: 5, left: 3, right: 3, bottom: 5 };
 
 	/**
