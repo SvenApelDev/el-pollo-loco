@@ -30,8 +30,8 @@ class MovableObject extends DrawableObject {
 	 * @param {string[]} images - array of image paths to play.
 	 */
 	playAnimation(images) {
-		let i = this.currentImage % images.length;
-		let path = images[i];
+		const i = this.currentImage % images.length;
+		const path = images[i];
 		this.img = this.imageCache[path];
 		this.currentImage++;
 	}
@@ -136,7 +136,7 @@ class MovableObject extends DrawableObject {
 	 * @returns {boolean} True if energy is 0, otherwise false.
 	 */
 	isDead() {
-		return this.energy == 0;
+		return this.energy === 0;
 	}
 
 	/**

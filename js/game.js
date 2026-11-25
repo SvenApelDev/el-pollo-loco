@@ -1,6 +1,6 @@
 let canvas;
 let world;
-let keyboard = new Keyboard();
+const keyboard = new Keyboard();
 let currentMusic = AudioHub.GAME.end;
 
 /**
@@ -103,7 +103,7 @@ function bindTouchControls() {
 /**
  * Binds one touch to press and release a keyboard flag.
  * @param {string} id - the button element id.
- * @param {*} key - the keyboard property to toggle.
+ * @param {string} key - the keyboard property to toggle.
  */
 function bindTouchButton(id, key) {
 	const button = document.getElementById(id);
@@ -118,7 +118,7 @@ function bindTouchButton(id, key) {
 }
 
 window.addEventListener("keydown", (event) => {
-	let key = Keyboard.KEYS[event.keyCode];
+	const key = Keyboard.KEYS[event.keyCode];
 	if (key) {
 		if (key === "SPACE") event.preventDefault();
 		keyboard[key] = true;
@@ -126,7 +126,7 @@ window.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("keyup", (event) => {
-	let key = Keyboard.KEYS[event.keyCode];
+	const key = Keyboard.KEYS[event.keyCode];
 	if (key) keyboard[key] = false;
 });
 
