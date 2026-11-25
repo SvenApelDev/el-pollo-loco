@@ -3,19 +3,22 @@ class ThrowableObject extends MovableObject {
 	width = 50;
 	offset = { top: 10, left: 10, right: 10, bottom: 10 };
 	isSplashed = false;
-    canBeRemoved = false;
+	canBeRemoved = false;
+	direction = 1;
 
 	/**
 	 * Creates a throwable bottle at the given position and throws it.
 	 * @param {number} x - start x position
 	 * @param {number} y - start y position
+	 * @param {number} direction - 1 for right, -1 for left
 	 */
-	constructor(x, y) {
+	constructor(x, y, direction) {
 		super();
 		this.loadImage(ImageHub.BOTTLE.rotation[0]);
 		this.loadImages(ImageHub.BOTTLE.rotation);
 		this.x = x;
 		this.y = y;
+		this.direction = direction;
 		this.throw();
 	}
 
@@ -27,7 +30,7 @@ class ThrowableObject extends MovableObject {
 		this.applyGravity();
 		IntervalHub.startInterval(() => {
 			if (this.isSplashed) return;
-			this.x += 8;
+			this.x += 8 * this.direction;
 		}, 1000 / 60);
 		IntervalHub.startInterval(() => {
 			if (this.isSplashed) return;
@@ -55,7 +58,7 @@ class ThrowableObject extends MovableObject {
 			this.currentImage = 0;
 			this.loadImages(ImageHub.BOTTLE.splash);
 			AudioHub.playOne(AudioHub.BOTTLE.break);
-            setTimeout(() => this.canBeRemoved = true, 300);
+			setTimeout(() => (this.canBeRemoved = true), 300);
 		}
 		this.playAnimationOnce(ImageHub.BOTTLE.splash);
 	}

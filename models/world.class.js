@@ -220,7 +220,8 @@ class World {
 	 */
 	checkThrow() {
 		if (this.keyboard.D && !this.throwCooldown && this.bottleAmount > 0 && Date.now() - this.lastThrow > this.throwDelay) {
-			const bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
+			const direction = this.character.otherDirection ? -1 : 1;
+			const bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100, direction);
 			this.throwableObjects.push(bottle);
 			this.bottleAmount--;
 			this.throwCooldown = true;
