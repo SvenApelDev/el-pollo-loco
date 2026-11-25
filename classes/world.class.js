@@ -46,6 +46,16 @@ class World {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.camera_x = -this.character.x + 100;
 		this.ctx.translate(this.camera_x, 0);
+		this.drawWorldObjects();
+		this.ctx.translate(-this.camera_x, 0);
+		this.drawHud();
+		requestAnimationFrame(() => this.draw());
+	}
+
+	/**
+	 * Draws all objects that move with the camera.
+	 */
+	drawWorldObjects() {
 		this.addObjectsToMap(this.level.backgroundObjects);
 		this.addObjectsToMap(this.level.clouds);
 		this.addObjectsToMap(this.level.bottles);
@@ -53,14 +63,18 @@ class World {
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.throwableObjects);
 		this.addToMap(this.character);
-		this.ctx.translate(-this.camera_x, 0);
+	}
+
+	/**
+	 * Draws the fixed status bars and counters.
+	 */
+	drawHud() {
 		this.addToMap(this.statusBar);
 		this.bottleBar.count = this.bottleAmount;
 		this.bottleBar.draw(this.ctx);
 		this.coinBar.count = this.coinAmount;
 		this.coinBar.draw(this.ctx);
 		this.endbossBar.draw(this.ctx);
-		requestAnimationFrame(() => this.draw());
 	}
 
 	/**
@@ -242,17 +256,25 @@ class World {
 			this.level.enemies.forEach((enemy) => {
 				enemy.getRealFrame();
 				if (bottle.isColliding(enemy) && !enemy.isDeadEnemy && !bottle.isSplashed) {
-					if (enemy instanceof Endboss) {
-						enemy.hit();
-						AudioHub.playOne(AudioHub.ENDBOSS.hurt);
-						this.endbossBar.setPercentage(enemy.energy);
-					} else {
-						enemy.die();
-					}
+					this.handleBottleHit(enemy);
 					bottle.splash();
 				}
 			});
 		});
+	}
+
+	/**
+	 * Damages the endboss or kills a chicken hit by a bottle.
+	 * @param {MovableObject} enemy - The enemy that was hit.
+	 */
+	handleBottleHit(enemy) {
+		if (enemy instanceof Endboss) {
+			enemy.hit();
+			AudioHub.playOne(AudioHub.ENDBOSS.hurt);
+			this.endbossBar.setPercentage(enemy.energy);
+		} else {
+			enemy.die();
+		}
 	}
 
 	/**

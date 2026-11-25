@@ -99,36 +99,28 @@ class ImageHub {
 			"img/4_enemie_boss_chicken/2_alert/G11.png",
 			"img/4_enemie_boss_chicken/2_alert/G12.png",
 		],
-        attack: [
-            'img/4_enemie_boss_chicken/3_attack/G13.png',
-            'img/4_enemie_boss_chicken/3_attack/G14.png',
-            'img/4_enemie_boss_chicken/3_attack/G15.png',
-            'img/4_enemie_boss_chicken/3_attack/G16.png',
-            'img/4_enemie_boss_chicken/3_attack/G17.png',
-            'img/4_enemie_boss_chicken/3_attack/G18.png',
-            'img/4_enemie_boss_chicken/3_attack/G19.png',
-            'img/4_enemie_boss_chicken/3_attack/G20.png',
-        ],
-        hurt: [
-            'img/4_enemie_boss_chicken/4_hurt/G21.png',
-            'img/4_enemie_boss_chicken/4_hurt/G22.png',
-            'img/4_enemie_boss_chicken/4_hurt/G23.png',
-        ],
-        dead: [
-            'img/4_enemie_boss_chicken/5_dead/G24.png',
-            'img/4_enemie_boss_chicken/5_dead/G25.png',
-            'img/4_enemie_boss_chicken/5_dead/G26.png',
-        ],	
+		attack: [
+			"img/4_enemie_boss_chicken/3_attack/G13.png",
+			"img/4_enemie_boss_chicken/3_attack/G14.png",
+			"img/4_enemie_boss_chicken/3_attack/G15.png",
+			"img/4_enemie_boss_chicken/3_attack/G16.png",
+			"img/4_enemie_boss_chicken/3_attack/G17.png",
+			"img/4_enemie_boss_chicken/3_attack/G18.png",
+			"img/4_enemie_boss_chicken/3_attack/G19.png",
+			"img/4_enemie_boss_chicken/3_attack/G20.png",
+		],
+		hurt: ["img/4_enemie_boss_chicken/4_hurt/G21.png", "img/4_enemie_boss_chicken/4_hurt/G22.png", "img/4_enemie_boss_chicken/4_hurt/G23.png"],
+		dead: ["img/4_enemie_boss_chicken/5_dead/G24.png", "img/4_enemie_boss_chicken/5_dead/G25.png", "img/4_enemie_boss_chicken/5_dead/G26.png"],
 	};
 
-    static HEALTHBAR_ENDBOSS = {
-        orange: [
-            'img/7_statusbars/2_statusbar_endboss/orange/orange0.png',
-            'img/7_statusbars/2_statusbar_endboss/orange/orange20.png',
-            'img/7_statusbars/2_statusbar_endboss/orange/orange40.png',
-            'img/7_statusbars/2_statusbar_endboss/orange/orange60.png',
-            'img/7_statusbars/2_statusbar_endboss/orange/orange80.png',
-            'img/7_statusbars/2_statusbar_endboss/orange/orange100.png',
-        ],
-    };
+	static HEALTHBAR_ENDBOSS = {
+		orange: [
+			"img/7_statusbars/2_statusbar_endboss/orange/orange0.png",
+			"img/7_statusbars/2_statusbar_endboss/orange/orange20.png",
+			"img/7_statusbars/2_statusbar_endboss/orange/orange40.png",
+			"img/7_statusbars/2_statusbar_endboss/orange/orange60.png",
+			"img/7_statusbars/2_statusbar_endboss/orange/orange80.png",
+			"img/7_statusbars/2_statusbar_endboss/orange/orange100.png",
+		],
+	};
 }
