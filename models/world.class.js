@@ -128,7 +128,7 @@ class World {
 		this.updateCollectLock();
 		if (this.checkEnemyHit()) return;
 		if (this.checkEnemyKill()) return;
-		if(!this.collectLocked && this.collectBottle()) return;
+		if (!this.collectLocked && this.collectBottle()) return;
 		this.collectCoin();
 	}
 
@@ -136,7 +136,7 @@ class World {
 	 * Release the bottle-collect lock once the character is back on the ground.
 	 */
 	updateCollectLock() {
-		if(this.collectLocked && !this.character.isAboveGround()) {
+		if (this.collectLocked && !this.character.isAboveGround()) {
 			this.collectLocked = false;
 		}
 	}
@@ -149,7 +149,7 @@ class World {
 		for (const enemy of this.level.enemies) {
 			enemy.getRealFrame();
 			if (this.character.isColliding(enemy) && !enemy.isDeadEnemy && !this.character.isFalling() && !this.character.isHurt()) {
-				this.character.hit();
+				this.character.hit(enemy.damage);
 				AudioHub.playOne(AudioHub.PEPE.hurt);
 				this.statusBar.setPercentage(this.character.energy);
 				return true;

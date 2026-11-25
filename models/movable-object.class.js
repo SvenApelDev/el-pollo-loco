@@ -1,5 +1,6 @@
 class MovableObject extends DrawableObject {
 	energy = 100;
+	damage = 20;
 	lastHit = 0;
 	isDeadEnemy = false;
 	speed = 0.15;
@@ -109,10 +110,11 @@ class MovableObject extends DrawableObject {
 	}
 
 	/**
-	 * Reduces energy by 10 and records the time of the hit.
+	 * Reduces energy by the given damage and records the time of the hit.
+	 * @param {number} damage - Amount of energy to subtract.
 	 */
-	hit() {
-		this.energy -= 20;
+	hit(damage = 20) {
+		this.energy -= damage;
 		if (this.energy < 0) {
 			this.energy = 0;
 		} else {
