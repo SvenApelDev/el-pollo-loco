@@ -50,6 +50,20 @@ body {
 	background: url("img/5_background/bg-start.webp") center / cover no-repeat fixed;
 }
 
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	background: rgba(27, 11, 1, 0.6);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.4s;
+}
+
+body.game-running::before {
+	opacity: 1;
+}
+
 main {
 	flex: 1;
 	display: flex;
@@ -62,6 +76,7 @@ main {
 }
 
 header {
+    position: relative;
 	width: 100%;
 	max-width: 1440px;
 	padding: clamp(24px, 6vw, 68px) 12px 0;

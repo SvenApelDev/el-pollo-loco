@@ -23,6 +23,7 @@ function startGame() {
 	world = new World(canvas, keyboard);
 	startGameMusicAfterIntro();
 	document.getElementById("touchControls").classList.add("active");
+	document.body.classList.add("game-running");
 }
 
 /**
@@ -88,6 +89,7 @@ function backToStart() {
 	document.getElementById("winScreen").classList.add("hidden");
 	document.getElementById("startScreen").classList.remove("hidden");
 	document.getElementById("touchControls").classList.remove("active");
+	document.body.classList.remove("game-running");
 }
 
 /**
