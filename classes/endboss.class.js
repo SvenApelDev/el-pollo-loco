@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
 	height = 400;
 	width = 250;
 	y = 60;
-	speed = 1.2;
+	speed = 1.8;
 	damage = 40;
 	offset = { top: 70, left: 50, right: 60, bottom: 40 };
 	hadFirstContact = false;
