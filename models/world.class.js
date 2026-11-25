@@ -115,6 +115,7 @@ class World {
 		IntervalHub.startInterval(() => this.clearBottles(), 1000 / 10);
 		IntervalHub.startInterval(() => this.clearDeadEnemies(), 1000 / 10);
 		IntervalHub.startInterval(() => this.checkEndboss(), 1000 / 60);
+		IntervalHub.startInterval(() => this.checkEndbossPassed(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkGameOver(), 1000 / 60);
 		IntervalHub.startInterval(() => this.checkWin(), 1000 / 60);
 	}
@@ -276,6 +277,17 @@ class World {
 		if (this.endboss.hadFirstContact) {
 			this.endboss.isAttacking = this.character.x > this.endboss.x - 150;
 			this.endboss.moveLeft();
+		}
+	}
+
+	/**
+	 * Kills the character once it passes the middle of the endboss.
+	 */
+	checkEndbossPassed() {
+		if (!this.endboss || this.endboss.isDead()) return;
+		if (this.character.rX > this.endboss.rX + this.endboss.rW / 2) {
+			this.character.energy = 0;
+			this.statusBar.setPercentage(0);
 		}
 	}
 
