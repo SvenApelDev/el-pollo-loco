@@ -55,7 +55,7 @@ class AudioHub {
     static playOne(sound) {
         if (AudioHub.muted) return;
         sound.file.currentTime = 0;
-        sound.file.play();
+        sound.file.play().catch(() => {});
     }
 
     static stopOne(sound) {
