@@ -5,6 +5,7 @@ class ThrowableObject extends MovableObject {
 	isSplashed = false;
 	canBeRemoved = false;
 	direction = 1;
+	groundY = 364;
 
 	/**
 	 * Creates a throwable bottle at the given position and throws it.
@@ -39,11 +40,11 @@ class ThrowableObject extends MovableObject {
 	}
 
 	/**
-	 * Applies gravity to the bootle until it hits the ground.
+	 * Applies gravity to the bottle until it hits the ground.
 	 */
 	applyGravity() {
 		IntervalHub.startInterval(() => {
-			if (this.y < 364) {
+			if (this.y < this.groundY) {
 				this.y -= this.speedY;
 				this.speedY -= this.acceleration;
 			} else {
@@ -52,6 +53,9 @@ class ThrowableObject extends MovableObject {
 		}, 1000 / 25);
 	}
 
+	/**
+	 * Starts the splash once with sound and marks the bottle for removal, then plays the splash frames.
+	 */
 	splash() {
 		if (!this.isSplashed) {
 			this.isSplashed = true;

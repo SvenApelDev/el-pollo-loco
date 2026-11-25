@@ -33,7 +33,7 @@ class World {
 	}
 
 	/**
-	 * Links game objects to the current world instance:
+	 * Links game objects to the current world instance.
 	 */
 	setWorld() {
 		this.character.world = this;
@@ -108,7 +108,7 @@ class World {
 	}
 
 	/**
-	 * Starts the collision check loop.
+	 * Starts all game logic loops.
 	 */
 	run() {
 		IntervalHub.startInterval(() => this.checkCollision(), 1000 / 60);
@@ -271,7 +271,6 @@ class World {
 
 	/**
 	 * Activates the endboss and moves it toward the character.
-	 * @returns
 	 */
 	checkEndboss() {
 		if (!this.endboss || this.endboss.isDead()) return;

@@ -5,7 +5,8 @@ class ChickenNormal extends MovableObject {
 	offset = { top: 5, left: 3, right: 3, bottom: 5 };
 
 	/**
-	 * Creates a normal chicken at a random position and starts its behaviour.
+	 * Creates a normal chicken at the given x position and starts its behaviour.
+	 * @param {number} x - Start x position in the level.
 	 */
 	constructor(x) {
 		super();
@@ -13,7 +14,7 @@ class ChickenNormal extends MovableObject {
 		this.loadImages(ImageHub.CHICKEN_NORMAL.walk);
 		this.loadImages(ImageHub.CHICKEN_NORMAL.dead);
 		this.deadImages = ImageHub.CHICKEN_NORMAL.dead;
-        this.x = x;
+		this.x = x;
 		this.speed = 0.15 + Math.random() * 0.5;
 		this.animate();
 	}
@@ -27,7 +28,7 @@ class ChickenNormal extends MovableObject {
 			this.moveLeft();
 		}, 1000 / 60);
 		IntervalHub.startInterval(() => {
-            if (this.isDeadEnemy) return;
+			if (this.isDeadEnemy) return;
 			this.playAnimation(ImageHub.CHICKEN_NORMAL.walk);
 		}, 1000 / 8);
 	}

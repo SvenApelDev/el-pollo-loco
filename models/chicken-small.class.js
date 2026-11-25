@@ -5,7 +5,8 @@ class ChickenSmall extends MovableObject {
 	offset = { top: 5, left: 5, right: 5, bottom: 5 };
 
 	/**
-	 * Creates a small chicken at a random position and starts its behaviour.
+	 * Creates a small chicken at the given x position and starts its behaviour.
+	 * @param {number} x - Start x position in the level.
 	 */
 	constructor(x) {
 		super();
@@ -13,7 +14,7 @@ class ChickenSmall extends MovableObject {
 		this.loadImages(ImageHub.CHICKEN_SMALL.walk);
 		this.loadImages(ImageHub.CHICKEN_SMALL.dead);
 		this.deadImages = ImageHub.CHICKEN_SMALL.dead;
-        this.x = x;
+		this.x = x;
 		this.speed = 0.2 + Math.random() * 0.6;
 		this.animate();
 	}

@@ -4,7 +4,6 @@ class Endboss extends MovableObject {
 	y = 60;
 	speed = 1.2;
 	damage = 40;
-	energy = 100;
 	offset = { top: 70, left: 50, right: 60, bottom: 40 };
 	hadFirstContact = false;
 	showAlert = false;
@@ -33,7 +32,7 @@ class Endboss extends MovableObject {
 	}
 
 	/**
-	 * Toggle between walk and alert display during the case.
+	 * Toggles between walk and alert display during the chase.
 	 */
 	toggleAlert() {
 		if (this.hadFirstContact) this.showAlert = !this.showAlert;
