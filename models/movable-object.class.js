@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
 	speedY = 0;
 	currentImage = 0;
 	acceleration = 2.5;
+	jumpSpeed = 32;
 	deadFinished = false;
 	deadDelay = 0;
 
@@ -98,7 +99,7 @@ class MovableObject extends DrawableObject {
 	 * Makes the object jump by setting upward speed.
 	 */
 	jump() {
-		this.speedY = 32;
+		this.speedY = this.jumpSpeed;
 	}
 
 	/**

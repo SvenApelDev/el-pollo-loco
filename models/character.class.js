@@ -8,8 +8,8 @@ class Character extends MovableObject {
 	maxX = 3400;
 	otherDirection = false;
 	lastMovement = 0;
-    offset = {top: 140, left: 34, right: 46, bottom: 16};
-    deadStarted = false;
+	offset = { top: 140, left: 34, right: 46, bottom: 16 };
+	deadStarted = false;
 	world;
 	isWalking = false;
 	isSnoring = false;
@@ -47,12 +47,23 @@ class Character extends MovableObject {
 		this.updateSnoreSound();
 	}
 
-/**
- * Plays the animation that matches the character's current state.
- */
+	/**
+	 * Plays the animation that matches the character's current state.
+	 */
 	checkAnimation() {
-		if(this.isDead()) return this.playDeadAnimation();
+		if (this.isDead()) return this.playDeadAnimation();
+		if (this.isAboveGround() && !this.isHurt()) return this.playJumpAnimation();
 		this.playAnimation(this.currentAnimation());
+	}
+
+	/**
+	 * Shows the airborne jump frame (J-34 to J-38) that matches the current jump phase.
+	 */
+	playJumpAnimation() {
+		const images = ImageHub.PEPE.jump.slice(3, 8);
+		const progress = (this.jumpSpeed - this.speedY) / (2 * this.jumpSpeed);
+		const i = Math.min(images.length - 1, Math.floor(progress * images.length));
+		this.img = this.imageCache[images[i]];
 	}
 
 	/**
@@ -60,10 +71,9 @@ class Character extends MovableObject {
 	 * @returns {string[]} The animation frames to play.
 	 */
 	currentAnimation() {
-		if(this.isHurt()) return ImageHub.PEPE.hurt;
-		if (this.isAboveGround()) return ImageHub.PEPE.jump;
-		if(this.isMoving()) return ImageHub.PEPE.walk;
-		if(this.isSleeping()) return ImageHub.PEPE.longIdle;
+		if (this.isHurt()) return ImageHub.PEPE.hurt;
+		if (this.isMoving()) return ImageHub.PEPE.walk;
+		if (this.isSleeping()) return ImageHub.PEPE.longIdle;
 		return ImageHub.PEPE.idle;
 	}
 
@@ -71,7 +81,7 @@ class Character extends MovableObject {
 	 * Loops the snore sound while sleeping, stops it otherwise.
 	 */
 	updateSnoreSound() {
-		if(this.isSleeping() && !this.isSnoring) {
+		if (this.isSleeping() && !this.isSnoring) {
 			AudioHub.playOne(AudioHub.PEPE.snore);
 			this.isSnoring = true;
 		} else if (!this.isSleeping()) {
@@ -93,7 +103,7 @@ class Character extends MovableObject {
 	 * Refreshes the last-movement timestamp on any input.
 	 */
 	updateLastMovement() {
-		if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
+		if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
 			this.lastMovement = Date.now();
 		}
 	}
@@ -102,7 +112,7 @@ class Character extends MovableObject {
 	 * Moves the character left or right based on input.
 	 */
 	handleWalk() {
-		if(this.world.keyboard.RIGHT && this.x < this.maxX) {
+		if (this.world.keyboard.RIGHT && this.x < this.maxX) {
 			this.moveRight();
 			this.otherDirection = false;
 		}
@@ -118,10 +128,10 @@ class Character extends MovableObject {
 	 */
 	updateWalkSound() {
 		const walking = this.isMoving() && !this.isAboveGround();
-		if(walking && !this.isWalking) {
+		if (walking && !this.isWalking) {
 			AudioHub.playOne(AudioHub.PEPE.walk);
 			this.isWalking = true;
-		} else if(!walking) {
+		} else if (!walking) {
 			AudioHub.stopOne(AudioHub.PEPE.walk);
 			this.isWalking = false;
 		}
