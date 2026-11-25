@@ -14,6 +14,8 @@ class World {
 	coinBar = new CountBar(ImageHub.COIN[1], 110, 50, 75, 75, 90);
 	throwableObjects = [];
 	throwCooldown = false;
+	lastThrow = 0;
+	throwDelay = 500;
 	collectLocked = false;
 
 	/**
@@ -214,14 +216,15 @@ class World {
 	}
 
 	/**
-	 * Throws one bottle per Key press of D.
+	 * Throws one bottle per key press of D, at most once per throw delay.
 	 */
 	checkThrow() {
-		if (this.keyboard.D && !this.throwCooldown && this.bottleAmount > 0) {
+		if (this.keyboard.D && !this.throwCooldown && this.bottleAmount > 0 && Date.now() - this.lastThrow > this.throwDelay) {
 			const bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
 			this.throwableObjects.push(bottle);
 			this.bottleAmount--;
 			this.throwCooldown = true;
+			this.lastThrow = Date.now();
 			AudioHub.playOne(AudioHub.BOTTLE.throw);
 		}
 		if (!this.keyboard.D) {
